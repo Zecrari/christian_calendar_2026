@@ -1,0 +1,272 @@
+// Auto-generated file
+import 'dart:convert';
+import 'package:flutter/services.dart';
+
+class BibleData {
+  static Map<String, dynamic>? _bibleContent;
+  static List<String> availableBooks = [];
+
+  static Future<void> load(String langCode) async {
+    _bibleContent = {};
+    availableBooks = [];
+
+    try {
+      String filename =
+          (langCode == 'ta') ? 'assets/bible_tamil.json' : 'assets/bible.json';
+      final String response = await rootBundle.loadString(filename);
+      final dynamic decodedData = json.decode(response);
+
+      if (langCode == 'ta') {
+        // Tamil Adapter
+        if (decodedData is Map && decodedData.containsKey('Book')) {
+          List<dynamic> booksList = decodedData['Book'];
+          for (int i = 0; i < booksList.length; i++) {
+            String bookName =
+                (i < tamilBookNames.length)
+                    ? tamilBookNames[i]
+                    : "Book ${i + 1}";
+            availableBooks.add(bookName);
+            var bookObj = booksList[i];
+            var chaptersData = bookObj['Chapter'];
+            List<dynamic> chaptersList =
+                (chaptersData is List) ? chaptersData : [chaptersData];
+            Map<String, dynamic> chaptersMap = {};
+
+            for (int c = 0; c < chaptersList.length; c++) {
+              String chapterNum = (c + 1).toString();
+              var verseData = chaptersList[c]['Verse'];
+              List<dynamic> versesList =
+                  (verseData is List) ? verseData : [verseData];
+              Map<String, String> versesMap = {};
+              for (int v = 0; v < versesList.length; v++) {
+                String verseNum = (v + 1).toString();
+                String text = versesList[v]['Verse'].toString();
+                versesMap[verseNum] = text;
+              }
+              chaptersMap[chapterNum] = versesMap;
+            }
+            _bibleContent![bookName] = chaptersMap;
+          }
+        }
+      } else {
+        // English Adapter
+        _bibleContent = Map<String, dynamic>.from(decodedData);
+        availableBooks = _bibleContent!.keys.toList();
+      }
+    } catch (e) {
+      print("Error loading Bible JSON: $e");
+      availableBooks = ["Genesis"];
+      _bibleContent = {
+        "Genesis": {
+          "1": {"1": "Error loading bible data."},
+        },
+      };
+    }
+  }
+
+  static String getChapterText(String book, int chapter) {
+    if (_bibleContent == null || !_bibleContent!.containsKey(book))
+      return "Loading...";
+    final bookData = _bibleContent![book];
+    final chapterKey = chapter.toString();
+    if (bookData == null || !bookData.containsKey(chapterKey))
+      return "End of Book.";
+
+    final dynamic versesData = bookData[chapterKey];
+    Map<String, dynamic> verses = {};
+    if (versesData is Map)
+      verses = Map<String, dynamic>.from(versesData);
+    else if (versesData is List) {
+      for (int i = 0; i < versesData.length; i++)
+        verses[(i + 1).toString()] = versesData[i];
+    }
+
+    final sortedKeys =
+        verses.keys.toList()
+          ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
+    StringBuffer buffer = StringBuffer();
+    for (var key in sortedKeys) buffer.write("$key. ${verses[key]}\n\n");
+    return buffer.toString().trim();
+  }
+
+  static int getChapterCount(String book) {
+    if (_bibleContent == null || !_bibleContent!.containsKey(book)) return 50;
+    return (_bibleContent![book] as Map).length;
+  }
+
+  static List<Map<String, dynamic>> searchVerses(String query) {
+    if (_bibleContent == null || query.isEmpty || query.length < 3) return [];
+    List<Map<String, dynamic>> results = [];
+    String lowerQuery = query.toLowerCase();
+
+    for (var book in availableBooks) {
+      var chapters = _bibleContent![book];
+      if (chapters == null) continue;
+      if (chapters is Map) {
+        chapters.forEach((chapterNum, verses) {
+          _searchInsideVerses(book, chapterNum, verses, lowerQuery, results);
+        });
+      }
+    }
+    return results;
+  }
+
+  static void _searchInsideVerses(
+    String book,
+    String chapterNum,
+    dynamic verses,
+    String query,
+    List<Map<String, dynamic>> results,
+  ) {
+    if (results.length > 50) return;
+    Map<String, dynamic> versesMap = {};
+    if (verses is Map) versesMap = Map<String, dynamic>.from(verses);
+
+    versesMap.forEach((verseNum, text) {
+      if (text.toString().toLowerCase().contains(query)) {
+        results.add({
+          'book': book,
+          'chapter': int.parse(chapterNum),
+          'verse': verseNum,
+          'text': text,
+          'preview': _getPreview(text, query),
+        });
+      }
+    });
+  }
+
+  static String _getPreview(String text, String query) {
+    int idx = text.toLowerCase().indexOf(query);
+    int start = (idx - 20) < 0 ? 0 : (idx - 20);
+    int end =
+        (idx + query.length + 50) > text.length
+            ? text.length
+            : (idx + query.length + 50);
+    return "...${text.substring(start, end)}...";
+  }
+
+  static const List<String> tamilBookNames = [
+    "ஆதியாகமம்",
+    "யாத்திராகமம்",
+    "லேவியராகமம்",
+    "எண்ணாகமம்",
+    "உபாகமம்",
+    "யோசுவா",
+    "நியாயாதிபதிகள்",
+    "ரூத்",
+    "1 சாமுவேல்",
+    "2 சாமுவேல்",
+    "1 இராஜாக்கள்",
+    "2 இராஜாக்கள்",
+    "1 நாளாகமம்",
+    "2 நாளாகமம்",
+    "எஸ்றா",
+    "நெகேமியா",
+    "எஸ்தர்",
+    "யோபு",
+    "சங்கீதம்",
+    "நீதிமொழிகள்",
+    "பிரசங்கி",
+    "உன்னதப்பாட்டு",
+    "ஏசாயா",
+    "எரேமியா",
+    "புலம்பல்",
+    "எசேக்கியேல்",
+    "தானியேல்",
+    "ஓசியா",
+    "யோவேல்",
+    "ஆமோஸ்",
+    "ஒபதியா",
+    "யோனா",
+    "மீகா",
+    "நாகூம்",
+    "ஆபகூக்",
+    "செப்பனியா",
+    "ஆகாய்",
+    "சகரியா",
+    "மல்கியா",
+    "மத்தேயு",
+    "மாற்கு",
+    "லூக்கா",
+    "யோவான்",
+    "அப்போஸ்தலர்",
+    "ரோமர்",
+    "1 கொரிந்தியர்",
+    "2 கொரிந்தியர்",
+    "கலாத்தியர்",
+    "எபேசியர்",
+    "பிலிப்பியர்",
+    "கொலோசெயர்",
+    "1 தெசலோனிக்கேயர்",
+    "2 தெசலோனிக்கேயர்",
+    "1 தீமோத்தேயு",
+    "2 தீமோத்தேயு",
+    "தீத்து",
+    "பிலேமோன்",
+    "எபிரேயர்",
+    "யாக்கோபு",
+    "1 பேதுரு",
+    "2 பேதுரு",
+    "1 யோவான்",
+    "2 யோவான்",
+    "3 யோவான்",
+    "யூதா",
+    "வெளிப்படுத்தின விசேஷம்",
+  ];
+}
+
+class DailyVerses {
+  // English Verses
+  static const List<Map<String, String>> _versesEn = [
+    {
+      'text': 'For God so loved the world that he gave his one and only Son...',
+      'reference': 'John 3:16',
+    },
+    {
+      'text': 'I can do all things through Christ who strengthens me.',
+      'reference': 'Philippians 4:13',
+    },
+    {
+      'text': 'The Lord is my shepherd; I shall not want.',
+      'reference': 'Psalm 23:1',
+    },
+    {'text': 'Be still, and know that I am God.', 'reference': 'Psalm 46:10'},
+    {
+      'text': 'Trust in the Lord with all your heart.',
+      'reference': 'Proverbs 3:5',
+    },
+  ];
+
+  // Tamil Verses
+  static const List<Map<String, String>> _versesTa = [
+    {
+      'text':
+          'தேவன் தம்முடைய ஒரேபேறான குமாரனை விசுவாசிக்கிறவன் எவனோ அவன் கெட்டுப்போகாமல் நித்தியஜீவனை அடையும்படிக்கு, அவரைத் தந்தருளி, இவ்வளவாய் உலகத்தில் அன்புூர்ந்தார்.',
+      'reference': 'யோவான் 3:16',
+    },
+    {
+      'text':
+          'என்னைப் பெலப்படுத்துகிற கிறிஸ்துவினாலே எல்லாவற்றையுஞ்செய்ய எனக்குப் பெலனுண்டு.',
+      'reference': 'பிலிப்பியர் 4:13',
+    },
+    {
+      'text': 'கர்த்தர் என் மேய்ப்பராயிருக்கிறார்; நான் தாழ்ச்சியடையேன்.',
+      'reference': 'சங்கீதம் 23:1',
+    },
+    {
+      'text': 'நீங்கள் அமர்ந்திருந்து, நானே தேவனென்று அறிந்துகொள்ளுங்கள்.',
+      'reference': 'சங்கீதம் 46:10',
+    },
+    {
+      'text':
+          'உன் சுயபுத்தியின்மேல் சாயாமல், உன் முழு இருதயத்தோடும் கர்த்தரில் நம்பிக்கையாயிரு.',
+      'reference': 'நீதிமொழிகள் 3:5',
+    },
+  ];
+
+  // UPDATED METHOD: Now accepts (int day, String lang)
+  static Map<String, String> getVerse(int day, String lang) {
+    final list = (lang == 'ta') ? _versesTa : _versesEn;
+    return list[day % list.length];
+  }
+}
