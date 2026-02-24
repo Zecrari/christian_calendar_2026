@@ -128,6 +128,70 @@ class AppTranslations {
     'light': {'en': 'Light', 'ta': 'வெளிச்சம்'},
     'dark': {'en': 'Dark', 'ta': 'இருட்டு'},
 
+    // Shop / Buy Bible
+// Add these to your translations map
+'shop': {'en': 'Shop', 'ta': 'கடை'},
+'buy_a_bible': {'en': 'Buy a Bible', 'ta': 'வேதாகமம் வாங்கு'},
+'browse_bibles_amazon': {'en': 'Browse Bibles on Amazon', 'ta': 'அமேசானில் வேதாகமங்களை பார்க்கவும்'},
+'buy_bible_title': {'en': 'Buy a Bible', 'ta': 'வேதாகமம் வாங்கு'},
+'buy_bible_subtitle': {'en': 'Amazon affiliate – supports this app ✝️', 'ta': 'அமேசான் இணைப்பு – இந்த செயலியை ஆதரிக்கிறது ✝️'},
+
+// Categories
+'adult_bibles': {'en': 'Adult Bibles', 'ta': 'பெரியோர் வேதாகமங்கள்'},
+'study_bibles': {'en': 'Study Bibles', 'ta': 'படிப்பு வேதாகமங்கள்'},
+'childrens_bibles': {"en": "Children's Bibles", 'ta': 'குழந்தைகள் வேதாகமங்கள்'},
+
+// Badges
+'badge_bestseller': {'en': 'Bestseller', 'ta': 'சிறப்பாக விற்பனையாகும்'},
+'badge_giant_print': {'en': 'Giant Print', 'ta': 'பெரிய எழுத்து'},
+'badge_premium': {'en': 'Premium', 'ta': 'உயர்தரம்'},
+'badge_nlt': {'en': 'NLT', 'ta': 'NLT'},
+'badge_kids_study': {'en': 'Kids Study', 'ta': 'குழந்தைகள் படிப்பு'},
+'badge_teen': {'en': 'Teen', 'ta': 'இளைஞர்'},
+'badge_classic': {'en': 'Classic', 'ta': 'கிளாசிக்'},
+'badge_award_winning': {'en': 'Award Winning', 'ta': 'விருது வென்றது'},
+'badge_set': {'en': 'Set', 'ta': 'தொகுப்பு'},
+'badge_illustrated': {'en': 'Illustrated', 'ta': 'விளக்கப்பட்ட'},
+'badge_toddlers': {'en': 'Toddlers', 'ta': 'சிறு குழந்தைகள்'},
+
+// Bible Item Titles & Subtitles (Adult)
+'bible_compact_ref_title': {'en': 'Compact Reference Bible – Celtic Burgundy Leathertouch', 'ta': 'சிறிய குறிப்பு வேதாகமம் – செதுக்கப்பட்ட பர்கண்டி'},
+'bible_compact_ref_sub': {'en': 'Beautiful compact leathertouch cover, great for daily carry', 'ta': 'தினசரி எடுத்துச் செல்ல சிறந்த அழகிய சிறிய அட்டை'},
+'bible_niv_giant_title': {'en': 'NIV Personal Giant Print Bible – Filament Enabled', 'ta': 'NIV தனிப்பட்ட பெரிய எழுத்து வேதாகமம்'},
+'bible_niv_giant_sub': {'en': 'Large print NIV, Filament app enabled for digital extras', 'ta': 'பெரிய எழுத்து NIV, டிஜிட்டல் வசதிகளுடன்'},
+'bible_niv_holy_title': {'en': 'NIV Holy Bible – Leathersoft, Comfort Print', 'ta': 'NIV பரிசுத்த வேதாகமம் – லெதர்சாப்ட்'},
+'bible_niv_holy_sub': {'en': 'Soft leathersoft cover with NIV Comfort Print typeface', 'ta': 'NIV கம்ஃபர்ட் பிரிண்ட் எழுத்துருவுடன் மென்மையான அட்டை'},
+'bible_niv_comfort_title': {'en': 'NIV Holy Bible – Comfort Print Edition', 'ta': 'NIV பரிசுத்த வேதாகமம் – கம்ஃபர்ட் பிரிண்ட்'},
+'bible_niv_comfort_sub': {'en': 'Crisp Comfort Print in a flexible, easy-to-read format', 'ta': 'படிக்க எளிதான வடிவத்தில் தெளிவான எழுத்துரு'},
+'bible_nlt_nt_title': {'en': 'NLT New Testament – Paperback Flexibound', 'ta': 'NLT புதிய ஏற்பாடு – பேப்பர்பேக்'},
+'bible_nlt_nt_sub': {'en': 'New Living Translation in a handy pocket flexibound format', 'ta': 'கையடக்க வடிவத்தில் புதிய லிவிங் மொழிபெயர்ப்பு'},
+
+// Bible Item Titles & Subtitles (Study)
+'bible_adv_study_title': {'en': 'Adventure Bible – NIV (Full Color)', 'ta': 'அட்வென்ச்சர் வேதாகமம் – NIV (முழு வண்ணம்)'},
+'bible_adv_study_sub': {'en': 'Full-color study Bible for ages 8–12, packed with features', 'ta': '8-12 வயதுடையவர்களுக்கான முழு வண்ணப் படிப்பு வேதாகமம்'},
+'bible_action_study_title': {'en': 'NIV Action Study Bible', 'ta': 'NIV ஆக்‌ஷன் படிப்பு வேதாகமம்'},
+'bible_action_study_sub': {'en': 'Action-packed study notes, maps, and full-color images', 'ta': 'படிப்பு குறிப்புகள், வரைபடங்கள் மற்றும் வண்ணப் படங்கள்'},
+
+// Bible Item Titles & Subtitles (Children)
+'bible_golden_child_title': {"en": "The Golden Children's Bible", 'ta': 'தங்க குழந்தைகள் வேதாகமம்'},
+'bible_golden_child_sub': {'en': 'Classic illustrated Bible stories treasured for generations', 'ta': 'தலைமுறைகளாக போற்றப்படும் கிளாசிக் வேதாகமக் கதைகள்'},
+'bible_biggest_story_title': {'en': 'The Biggest Story Bible Storybook', 'ta': 'மிகப்பெரிய வேதாகமக் கதைப்புத்தகம்'},
+'bible_biggest_story_sub': {"en": "Kevin DeYoung's award-winning Bible storybook for children", 'ta': 'குழந்தைகளுக்கான விருது பெற்ற வேதாகமக் கதைப்புத்தகம்'},
+'bible_101_stories_title': {'en': '101 Bible Stories (Set of Books)', 'ta': '101 வேதாகமக் கதைகள் (புத்தகத் தொகுப்பு)'},
+'bible_101_stories_sub': {'en': 'Colourful set of books covering 101 favourite Bible stories', 'ta': 'வண்ணமயமான 101 வேதாகமக் கதைகள் அடங்கிய தொகுப்பு'},
+'bible_treasury_title': {'en': 'Illustrated Treasury of Bible Stories', 'ta': 'விளக்கப்பட்ட வேதாகமக் கதைகளின் கருவூலம்'},
+'bible_treasury_sub': {'en': 'Miles Kelly beautifully illustrated treasury of Bible tales', 'ta': 'அழகாக விளக்கப்பட்ட வேதாகமக் கதைகளின் கருவூலம்'},
+'bible_first_book_title': {'en': 'My First Book of Bible Stories', 'ta': 'எனது முதல் வேதாகமக் கதைப்புத்தகம்'},
+'bible_first_book_sub': {'en': 'Perfect first Bible storybook for toddlers and young readers', 'ta': 'சிறு குழந்தைகளுக்கான சிறந்த முதல் வேதாகமக் கதைப்புத்தகம்'},
+
+
+    'feedback_section': {'en': 'Feedback', 'ta': 'கருத்து'},
+    'feedback': {'en': 'Share Your Feedback', 'ta': 'உங்கள் கருத்தை பகிரவும்'},
+    'feedback_subtitle': {
+      'en': 'Help us improve – fill a quick form',
+      'ta': 'எங்களை மேம்படுத்த உதவுங்கள் – படிவம் நிரப்பவும்',
+    },
+
     // Reading Tracker - New Keys
     'reading_streak': {'en': 'Reading Streak', 'ta': 'வாசிப்பு தொடர்'},
     'days': {'en': 'Days', 'ta': 'நாட்கள்'},

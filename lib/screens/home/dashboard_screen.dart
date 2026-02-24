@@ -14,6 +14,7 @@ import '../prayers/prayer_journal_screen.dart';
 import '../prayers/rosary_screen.dart';
 import '../saints/saints_screen.dart';
 import '../tracker/reading_tracker_screen.dart';
+import '../bible/buy_bible_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final String lang;
@@ -181,6 +182,13 @@ class DashboardScreen extends StatelessWidget {
                 AppTranslations.get('nav_rosary', lang),
                 Colors.pink,
                 destination: RosaryPrayersScreen(lang: lang),
+              ),
+              _buildQuickAction(
+                context,
+                Icons.shopping_bag_rounded,
+                'Buy a Bible',
+                const Color(0xFF7B1FA2),
+                destination: BuyBibleScreen(lang: lang),
               ),
             ],
           ),
