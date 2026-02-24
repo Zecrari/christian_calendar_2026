@@ -16,6 +16,7 @@ class AppTranslations {
     'write': {'en': 'Write', 'ta': 'எழுது'},
     'view_all': {'en': 'View Full Calendar', 'ta': 'முழு நாட்காட்டி'},
     'coming_soon': {'en': 'Coming Soon!', 'ta': 'விரைவில் வரும்!'},
+    'cancel': {'en': 'Cancel', 'ta': 'ரத்து'},
 
     // Dashboard
     'greeting': {'en': 'Blessings!', 'ta': 'ஆசீர்வாதம்!'},
@@ -34,6 +35,12 @@ class AppTranslations {
       'en': 'Churches Nearby',
       'ta': 'அருகிலுள்ள தேவாலயங்கள்',
     },
+
+// Add to AppTranslations
+'reading_streak': {'en': 'Reading Streak', 'ta': 'வாசிப்பு தொடர்'},
+'mark_read_today': {'en': 'Mark as Read Today', 'ta': 'இன்று வாசித்ததாக குறி'},
+'achievement_unlocked': {'en': 'Achievement Unlocked!', 'ta': 'சாதனை திறக்கப்பட்டது!'},
+'awesome': {'en': 'Awesome!', 'ta': 'அற்புதம்!'},
 
     // Calendar
     'liturgical_calendar': {
@@ -77,14 +84,23 @@ class AppTranslations {
     // Bible
     'bible_reader': {'en': 'Bible Reader', 'ta': 'பைபிள் வாசிப்பு'},
     'select_book': {'en': 'Select a Book', 'ta': 'புத்தகத்தைத் தேர்வுசெய்க'},
+    'select_book_chapter': {'en': 'Select Book & Chapter', 'ta': 'புத்தகம் & அதிகாரம் தேர்வு'},
     'chapter': {'en': 'Chapter', 'ta': 'அதிகாரம்'},
+    'chapters': {'en': 'Chapters', 'ta': 'அதிகாரங்கள்'},
+    'current': {'en': 'Current', 'ta': 'தற்போதைய'},
     'text_size': {'en': 'Text Size', 'ta': 'எழுத்து அளவு'},
     'size': {'en': 'Size', 'ta': 'அளவு'},
     'search_scripture': {
       'en': 'Search scripture...',
       'ta': 'வசனத்தைத் தேடு...',
     },
+    'type_to_search': {'en': 'Type to search scriptures...', 'ta': 'வேதவசனங்களைத் தேட தட்டச்சு செய்க...'},
     'no_verses': {'en': 'No verses found.', 'ta': 'வசனங்கள் இல்லை.'},
+    'no_verses_found': {'en': 'No verses found', 'ta': 'வசனங்கள் கிடைக்கவில்லை'},
+    'try_different_keywords': {'en': 'Try different keywords', 'ta': 'வேறு சொற்களை முயற்சிக்கவும்'},
+    'recent_searches': {'en': 'Recent Searches', 'ta': 'சமீபத்திய தேடல்கள்'},
+    'clear': {'en': 'Clear', 'ta': 'அழி'},
+    'popular_verses': {'en': 'Popular Verses', 'ta': 'பிரபலமான வசனங்கள்'},
     'buy_bible_book': {'en': 'Buy Holy Bible', 'ta': 'பரிசுத்த வேதாகமம் வாங்க'},
 
     // Saints
@@ -111,6 +127,33 @@ class AppTranslations {
     'theme': {'en': 'Theme', 'ta': 'தீம்'},
     'light': {'en': 'Light', 'ta': 'வெளிச்சம்'},
     'dark': {'en': 'Dark', 'ta': 'இருட்டு'},
+
+    // Reading Tracker - New Keys
+    'reading_streak': {'en': 'Reading Streak', 'ta': 'வாசிப்பு தொடர்'},
+    'days': {'en': 'Days', 'ta': 'நாட்கள்'},
+    'completed': {'en': 'Completed', 'ta': 'நிறைவு'},
+    'read_now': {'en': 'Read Now', 'ta': 'இப்போது வாசி'},
+    'best': {'en': 'Best', 'ta': 'சிறந்தது'},
+    'read': {'en': 'Read', 'ta': 'வாசித்தது'},
+    'this_month': {'en': 'This Month', 'ta': 'இந்த மாதம்'},
+    'reading_tracker': {'en': 'Reading Tracker', 'ta': 'வாசிப்பு கண்காணிப்பு'},
+    'current_streak': {'en': 'Current Streak', 'ta': 'தற்போதைய தொடர்'},
+    'start_reading': {'en': 'Start Reading', 'ta': 'வாசிப்பைத் தொடங்கு'},
+    'completed_today': {'en': 'Completed Today!', 'ta': 'இன்று நிறைவு!'},
+    'last_7_days': {'en': 'Last 7 Days', 'ta': 'கடந்த 7 நாட்கள்'},
+    'bible_progress': {'en': 'Bible Progress', 'ta': 'பைபிள் முன்னேற்றம்'},
+    'old_testament': {'en': 'Old Testament', 'ta': 'பழைய ஏற்பாடு'},
+    'new_testament': {'en': 'New Testament', 'ta': 'புதிய ஏற்பாடு'},
+    'chapters_read': {'en': 'Chapters', 'ta': 'அதிகாரங்கள்'},
+    'hours_total': {'en': 'Hours', 'ta': 'மணிநேரம்'},
+    'complete': {'en': 'Complete', 'ta': 'முழுமை'},
+    'days_this_month': {'en': 'Days This Month', 'ta': 'இந்த மாத நாட்கள்'},
+    'current_book': {'en': 'Current Book', 'ta': 'தற்போதைய புத்தகம்'},
+    'consistency': {'en': 'Consistency', 'ta': 'தொடர்ச்சி'},
+    'achievements': {'en': 'Achievements', 'ta': 'சாதனைகள்'},
+    'recent_activity': {'en': 'Recent Activity', 'ta': 'சமீபத்திய செயல்பாடு'},
+    'see_all': {'en': 'See All', 'ta': 'அனைத்தும் பார்'},
+    'continue_reading': {'en': 'Continue Reading', 'ta': 'வாசிப்பைத் தொடர்க'},
   };
 
   // --- HELPER FOR MONTHS ---

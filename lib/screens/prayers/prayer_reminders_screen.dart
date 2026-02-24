@@ -212,8 +212,8 @@ class _PrayerRemindersScreenState extends State<PrayerRemindersScreen> {
       return Icons.bedtime_rounded;
     if (codePoint == Icons.star_rounded.codePoint) return Icons.star_rounded;
 
-    // Fallback if strictly necessary
-    return IconData(codePoint, fontFamily: 'MaterialIcons');
+    // Fallback to a constant icon to prevent tree-shaking errors
+    return Icons.notifications;
   }
 
   // --- 4. UI: ADD/EDIT SHEET ---

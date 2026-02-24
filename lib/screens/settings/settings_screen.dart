@@ -25,23 +25,39 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   String selectedSound = 'sound_1';
-  String? _playingSound; // Tracks which sound is currently playing
+  String? _playingSound;
   final AudioPlayer _audioPlayer = AudioPlayer();
   final String _appVersion = "1.0.0";
+  
+  // Local state for immediate UI feedback
+  late String _localLang;
+  late ThemeMode _localThemeMode;
+  bool _isProcessing = false;
 
   @override
   void initState() {
     super.initState();
+    _localLang = widget.lang;
+    _localThemeMode = widget.themeMode;
     _loadSound();
-
-    // Listen for when audio finishes to reset the icon
+    
     _audioPlayer.onPlayerComplete.listen((event) {
       if (mounted) {
-        setState(() {
-          _playingSound = null;
-        });
+        setState(() => _playingSound = null);
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(SettingsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Sync local state when parent updates
+    if (oldWidget.lang != widget.lang) {
+      _localLang = widget.lang;
+    }
+    if (oldWidget.themeMode != widget.themeMode) {
+      _localThemeMode = widget.themeMode;
+    }
   }
 
   @override
@@ -55,20 +71,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (mounted) setState(() => selectedSound = saved);
   }
 
-  // --- AUDIO LOGIC ---
   Future<void> _playSound(String soundName) async {
     try {
-      // If the clicked sound is already playing, stop it (Toggle behavior)
       if (_playingSound == soundName) {
         await _stopSound();
         return;
       }
-
-      // Otherwise, play the new sound
-      await _audioPlayer.stop(); // Stop any previous sound
-
-      setState(() => _playingSound = soundName); // Update UI to show Stop icon
-
+      await _audioPlayer.stop();
+      setState(() => _playingSound = soundName);
       await _audioPlayer.play(AssetSource('sounds/$soundName.mp3'));
     } catch (e) {
       print("Error playing sound: $e");
@@ -78,19 +88,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _stopSound() async {
     await _audioPlayer.stop();
-    if (mounted) {
-      setState(() => _playingSound = null);
-    }
+    if (mounted) setState(() => _playingSound = null);
   }
 
   Future<void> _changeSound(String newSound) async {
-    await _stopSound(); // Stop playing when selected
+    await _stopSound();
     await StorageService.saveNotificationSound(newSound);
     setState(() => selectedSound = newSound);
     if (mounted) Navigator.pop(context);
   }
 
-  // --- POPUP SHEET ---
+  // --- OPTIMIZED LANGUAGE CHANGE ---
+  void _handleLanguageChange(String newLang) {
+    if (_isProcessing || newLang == _localLang) return;
+    
+    // Immediate UI feedback
+    setState(() {
+      _isProcessing = true;
+      _localLang = newLang;
+    });
+    
+    // Defer heavy operation to next frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onLanguageChange(newLang);
+      setState(() => _isProcessing = false);
+    });
+  }
+
+  // --- OPTIMIZED THEME CHANGE ---
+  void _handleThemeToggle() {
+    if (_isProcessing) return;
+    
+    // Immediate UI feedback
+    setState(() {
+      _isProcessing = true;
+      _localThemeMode = _localThemeMode == ThemeMode.light 
+          ? ThemeMode.dark 
+          : ThemeMode.light;
+    });
+    
+    // Defer heavy operation to next frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onThemeToggle();
+      setState(() => _isProcessing = false);
+    });
+  }
+
   void _showSoundSelectionSheet() {
     showModalBottomSheet(
       context: context,
@@ -99,15 +142,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (ctx) {
-        // Use StatefulBuilder to update icons inside the sheet
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setSheetState) {
-            // Helper to handle play/stop inside sheet and update sheet state
             void handlePlay(String sound) {
-              _playSound(sound).then((_) {
-                // Force sheet to rebuild to show new icon
-                setSheetState(() {});
-              });
+              _playSound(sound).then((_) => setSheetState(() {}));
             }
 
             return Padding(
@@ -129,28 +167,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                     return ListTile(
                       onTap: () => _changeSound(sound),
-                      // Play/Stop Button
                       leading: IconButton(
                         icon: Icon(
                           isPlaying
                               ? Icons.stop_circle_rounded
                               : Icons.play_circle_fill,
-                          color:
-                              isPlaying
-                                  ? Colors.red
-                                  : Theme.of(context).colorScheme.primary,
+                          color: isPlaying
+                              ? Colors.red
+                              : Theme.of(context).colorScheme.primary,
                           size: 32,
                         ),
                         onPressed: () => handlePlay(sound),
                       ),
                       title: Text(AppTranslations.get(sound, widget.lang)),
-                      trailing:
-                          isSelected
-                              ? const Icon(
-                                Icons.check_circle,
-                                color: Colors.green,
-                              )
-                              : null,
+                      trailing: isSelected
+                          ? const Icon(Icons.check_circle, color: Colors.green)
+                          : null,
                     );
                   }).toList(),
                 ],
@@ -159,13 +191,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           },
         );
       },
-    ).whenComplete(() {
-      _stopSound(); // Stop sound when sheet closes
-    });
+    ).whenComplete(() => _stopSound());
   }
 
   @override
   Widget build(BuildContext context) {
+    // Use local state for immediate feedback, parent state for source of truth
+    final isDark = _localThemeMode == ThemeMode.dark;
+    
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -178,16 +211,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _buildSectionHeader(AppTranslations.get('appearance', widget.lang)),
           SmoothCard(
             child: ListTile(
-              leading: const Icon(Icons.dark_mode_outlined),
+              leading: Icon(isDark ? Icons.dark_mode : Icons.light_mode),
               title: Text(AppTranslations.get('theme', widget.lang)),
               subtitle: Text(
-                widget.themeMode == ThemeMode.light
-                    ? AppTranslations.get('light', widget.lang)
-                    : AppTranslations.get('dark', widget.lang),
+                isDark
+                    ? AppTranslations.get('dark', widget.lang)
+                    : AppTranslations.get('light', widget.lang),
               ),
               trailing: Switch(
-                value: widget.themeMode == ThemeMode.dark,
-                onChanged: (_) => widget.onThemeToggle(),
+                value: isDark,
+                onChanged: _isProcessing ? null : (_) => _handleThemeToggle(),
               ),
             ),
           ),
@@ -222,17 +255,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 24),
 
           _buildSectionHeader(AppTranslations.get('language', widget.lang)),
-          ...AppConstants.languages.map(
-            (l) => SmoothCard(
+          ...AppConstants.languages.map((l) {
+            final isSelected = _localLang == l.code;
+            return SmoothCard(
+              margin: const EdgeInsets.only(bottom: 8),
               child: RadioListTile<String>(
                 value: l.code,
-                groupValue: widget.lang,
-                onChanged: (val) => widget.onLanguageChange(val!),
+                groupValue: _localLang,
+                onChanged: _isProcessing ? null : (val) => _handleLanguageChange(val!),
                 title: Text(l.name),
                 secondary: Text(l.flag, style: const TextStyle(fontSize: 24)),
+                activeColor: Theme.of(context).colorScheme.primary,
               ),
-            ),
-          ),
+            );
+          }).toList(),
 
           const SizedBox(height: 24),
           _buildSectionHeader("About"),
@@ -260,6 +296,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
           ),
+          
+          // Loading indicator when processing
+          if (_isProcessing)
+            const Padding(
+              padding: EdgeInsets.all(16),
+              child: Center(child: CircularProgressIndicator()),
+            ),
         ],
       ),
     );

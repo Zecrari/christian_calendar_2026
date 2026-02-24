@@ -5,12 +5,15 @@ import '../../config/translations.dart';
 import '../../config/constants.dart';
 import '../../widgets/smooth_card.dart';
 import '../../data/bible_data.dart';
+import '../../data/storage_service.dart'; // ADD THIS IMPORT
+import '../../services/reading_tracker_service.dart'; // ADD THIS IMPORT
 import '../bible/bible_reader_screen.dart';
 import '../calendar/calendar_screen.dart';
 import '../prayers/prayer_reminders_screen.dart';
 import '../prayers/prayer_journal_screen.dart';
 import '../prayers/rosary_screen.dart';
 import '../saints/saints_screen.dart';
+import '../tracker/reading_tracker_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final String lang;
@@ -42,7 +45,7 @@ class DashboardScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
-          // 1. Welcome Card (Keep gradient as generic brand colors)
+          // 1. Welcome Card
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
@@ -98,7 +101,11 @@ class DashboardScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // 2. Verse
+          // 2. NEW: Bible Reading Tracker Card (Main Feature)
+          _buildReadingTrackerCard(context),
+          const SizedBox(height: 24),
+
+          // 3. Verse of the Day
           _buildSectionTitle(
             context,
             AppTranslations.get('verse_of_day', lang),
@@ -134,7 +141,7 @@ class DashboardScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // 3. Grid
+          // 4. Quick Actions Grid
           _buildSectionTitle(
             context,
             AppTranslations.get('quick_actions', lang),
@@ -182,7 +189,157 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: const SafeArea(
         child: Padding(
           padding: EdgeInsets.only(bottom: 10),
-          child: MyBannerAdWidget(), // <--- PLACEMENT
+          child: MyBannerAdWidget(),
+        ),
+      ),
+    );
+  }
+
+  // --- READING TRACKER DASHBOARD CARD ---
+  Widget _buildReadingTrackerCard(BuildContext context) {
+    final int currentStreak = StorageService.getCurrentStreak();
+    final int longestStreak = StorageService.getLongestStreak();
+    final double completionPercent = ReadingTrackerService.getBibleCompletionPercentage();
+    final bool readToday = ReadingTrackerService.hasReadToday();
+    final int chaptersRead = StorageService.getReadChapters().length;
+    final String currentBook = StorageService.getCurrentBook();
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ReadingTrackerScreen(lang: lang),
+          ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: readToday
+                ? [const Color(0xFF4CAF50), const Color(0xFF2E7D32)]
+                : [const Color(0xFFFF6B35), const Color(0xFFF7931E)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: (readToday ? Colors.green : Colors.orange).withOpacity(0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.local_fire_department_rounded,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppTranslations.get('reading_streak', lang),
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            '$currentStreak ${AppTranslations.get('days', lang)}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          readToday ? Icons.check_circle : Icons.circle_outlined,
+                          color: readToday ? Colors.green : Colors.orange,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          readToday 
+                              ? AppTranslations.get('completed', lang)
+                              : AppTranslations.get('read_now', lang),
+                          style: TextStyle(
+                            color: readToday ? Colors.green.shade700 : Colors.orange.shade700,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: completionPercent / 100,
+                  backgroundColor: Colors.white.withOpacity(0.2),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+                  minHeight: 6,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '$chaptersRead ${AppTranslations.get('chapters_read', lang)}',
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 12,
+                    ),
+                  ),
+                  Text(
+                    '${completionPercent.toStringAsFixed(1)}%',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
