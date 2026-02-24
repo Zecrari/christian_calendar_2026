@@ -191,6 +191,7 @@ class AppTranslations {
       'en': 'Help us improve – fill a quick form',
       'ta': 'எங்களை மேம்படுத்த உதவுங்கள் – படிவம் நிரப்பவும்',
     },
+    'privacy_policy': {'en': 'Privacy Policy', 'ta': 'தனியுரிமைக் கொள்கை'},
 
     // Reading Tracker - New Keys
     'reading_streak': {'en': 'Reading Streak', 'ta': 'வாசிப்பு தொடர்'},

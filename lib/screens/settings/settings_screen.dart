@@ -276,6 +276,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                   ),
+                  _SettingsTile(
+                    onTap: () async {
+                      final uri = Uri.parse(
+                        'https://website-sw05.onrender.com/products/christian-calendar-2026/privacy-policy',
+                      );
+                      try {
+                        if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+                          throw Exception('Could not launch');
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Could not open Privacy Policy')),
+                          );
+                        }
+                      }
+                    },
+                    leadingIcon: Icons.privacy_tip_rounded,
+                    iconColor: Colors.teal,
+                    title: AppTranslations.get('privacy_policy', widget.lang),
+                    trailing: const Icon(Icons.open_in_new_rounded, color: Colors.grey, size: 18),
+                  ),
                 ],
               ),
               const SizedBox(height: 40),
