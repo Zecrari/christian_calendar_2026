@@ -71,7 +71,7 @@ class _MoveableFeastsScreenState extends State<MoveableFeastsScreen>
   Widget _buildFeastsTab(ThemeData theme) {
     final year = DateTime.now().year;
     final today = DateTime.now();
-    final feasts = LiturgicalCalculator.getMoveableFeasts(year);
+    final feasts = LiturgicalCalculator.getMoveableFeasts(year, widget.lang);
 
     // Sort by date
     final entries = feasts.entries.toList()

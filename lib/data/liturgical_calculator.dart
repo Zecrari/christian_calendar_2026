@@ -1,3 +1,5 @@
+import '../config/translations.dart';
+
 // Liturgical Calendar Calculator
 // Computes moveable feasts based on Easter (Computus Algorithm)
 
@@ -62,21 +64,22 @@ class LiturgicalCalculator {
   }
 
   /// Returns all moveable feasts for a given year as a Map<DateTime, String>
-  static Map<DateTime, String> getMoveableFeasts(int year) {
+  static Map<DateTime, String> getMoveableFeasts(int year, String lang) {
     return {
-      ashWednesday(year): 'Ash Wednesday',
-      palmSunday(year): 'Palm Sunday',
-      maundyThursday(year): 'Maundy Thursday',
-      goodFriday(year): 'Good Friday',
-      easterSunday(year): 'Easter Sunday',
-      easterSunday(year).add(const Duration(days: 1)): 'Easter Monday',
-      ascension(year): 'Ascension of Jesus',
-      pentecost(year): 'Pentecost',
-      trinitySunday(year): 'Trinity Sunday',
-      corpusChristi(year): 'Corpus Christi',
-      firstSundayOfAdvent(year): 'Advent – First Sunday',
+      ashWednesday(year): AppTranslations.get('ash_wednesday', lang),
+      palmSunday(year): AppTranslations.get('palm_sunday', lang),
+      maundyThursday(year): AppTranslations.get('maundy_thursday', lang),
+      goodFriday(year): AppTranslations.get('good_friday', lang),
+      easterSunday(year): AppTranslations.get('easter_sunday', lang),
+      easterSunday(year).add(const Duration(days: 1)): AppTranslations.get('easter_monday', lang),
+      ascension(year): AppTranslations.get('ascension', lang),
+      pentecost(year): AppTranslations.get('pentecost', lang),
+      trinitySunday(year): AppTranslations.get('trinity_sunday', lang),
+      corpusChristi(year): AppTranslations.get('corpus_christi', lang),
+      firstSundayOfAdvent(year): AppTranslations.get('first_sunday_of_advent', lang),
     };
   }
+
 
   /// Check if a given date is a fasting day (Friday OR Ash Wednesday OR Good Friday)
   static bool isFastingDay(DateTime date) {
@@ -105,16 +108,19 @@ class LiturgicalCalculator {
     if (isAsh) {
       if (lang == 'ta') return '🕯 சாம்பல் புதன் – உபவாசம்';
       if (lang == 'hi') return '🕯 भस्म बुधवार – उपवास';
+      if (lang == 'ml') return '🕯 വിഭൂതി ബുധനാഴ്ച – ഉപവാസം';
       return '🕯 Ash Wednesday – Day of Fast & Abstinence';
     }
     if (isGf) {
       if (lang == 'ta') return '✝ பெரிய வெள்ளி – கடுமையான உபவாசம்';
       if (lang == 'hi') return '✝ गुड फ्राइडे – कठोर उपवास';
+      if (lang == 'ml') return '✝ ദുഃഖവെള്ളിയാഴ്ച – ഉപവാസം';
       return '✝ Good Friday – Strict Fast & Abstinence';
     }
     // Regular Friday
     if (lang == 'ta') return '🐟 வெள்ளி – மாமிசம் தவிர்க்கவும்';
     if (lang == 'hi') return '🐟 शुक्रवार – मांस से परहेज करें';
+    if (lang == 'ml') return '🐟 വെള്ളിയാഴ്ച – മാംസം ഒഴിവാക്കുക';
     return '🐟 Friday – Day of Abstinence from Meat';
   }
 
