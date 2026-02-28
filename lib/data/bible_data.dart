@@ -12,18 +12,24 @@ class BibleData {
 
     try {
       String filename =
-          (langCode == 'ta') ? 'assets/bible_tamil.json' : 'assets/bible.json';
+          (langCode == 'ta')
+              ? 'assets/bible_tamil.json'
+              : (langCode == 'hi')
+                  ? 'assets/bible_hindi.json'
+                  : 'assets/bible.json';
       final String response = await rootBundle.loadString(filename);
       final dynamic decodedData = json.decode(response);
 
-      if (langCode == 'ta') {
-        // Tamil Adapter
+      if (langCode == 'ta' || langCode == 'hi') {
+        // Tamil / Hindi Adapter
+        final List<String> bookNames =
+            (langCode == 'hi') ? hindiBookNames : tamilBookNames;
         if (decodedData is Map && decodedData.containsKey('Book')) {
           List<dynamic> booksList = decodedData['Book'];
           for (int i = 0; i < booksList.length; i++) {
             String bookName =
-                (i < tamilBookNames.length)
-                    ? tamilBookNames[i]
+                (i < bookNames.length)
+                    ? bookNames[i]
                     : "Book ${i + 1}";
             availableBooks.add(bookName);
             var bookObj = booksList[i];
@@ -145,6 +151,75 @@ class BibleData {
     return "...${text.substring(start, end)}...";
   }
 
+  static const List<String> hindiBookNames = [
+    "उत्पत्ति",
+    "निर्गमन",
+    "लैव्यव्यवस्था",
+    "गिनती",
+    "व्यवस्थाविवरण",
+    "यहोशू",
+    "न्यायियों",
+    "रूत",
+    "1 शमूएल",
+    "2 शमूएल",
+    "1 राजाओं",
+    "2 राजाओं",
+    "1 इतिहास",
+    "2 इतिहास",
+    "एज्रा",
+    "नहेमायाह",
+    "एस्तेर",
+    "अय्यूब",
+    "भजन संहिता",
+    "नीतिवचन",
+    "सभोपदेशक",
+    "श्रेष्ठगीत",
+    "यशायाह",
+    "यिर्मयाह",
+    "विलापगीत",
+    "यहेजकेल",
+    "दानिय्येल",
+    "होशे",
+    "योएल",
+    "आमोस",
+    "ओबद्याह",
+    "योना",
+    "मीका",
+    "नाहूम",
+    "हबक्कूक",
+    "सपन्याह",
+    "हाग्गै",
+    "जकर्याह",
+    "मलाकी",
+    "मत्ती",
+    "मरकुस",
+    "लूका",
+    "यूहन्ना",
+    "प्रेरितों के काम",
+    "रोमियों",
+    "1 कुरिन्थियों",
+    "2 कुरिन्थियों",
+    "गलातियों",
+    "इफिसियों",
+    "फिलिप्पियों",
+    "कुलुस्सियों",
+    "1 थिस्सलुनीकियों",
+    "2 थिस्सलुनीकियों",
+    "1 तीमुथियुस",
+    "2 तीमुथियुस",
+    "तीतुस",
+    "फिलेमोन",
+    "इब्रानियों",
+    "याकूब",
+    "1 पतरस",
+    "2 पतरस",
+    "1 यूहन्ना",
+    "2 यूहन्ना",
+    "3 यूहन्ना",
+    "यहूदा",
+    "प्रकाशितवाक्य",
+  ];
+
   static const List<String> tamilBookNames = [
     "ஆதியாகமம்",
     "யாத்திராகமம்",
@@ -264,9 +339,36 @@ class DailyVerses {
     },
   ];
 
+  // Hindi Verses
+  static const List<Map<String, String>> _versesHi = [
+    {
+      'text':
+          'क्योंकि परमेश्वर ने जगत से ऐसा प्रेम रखा कि उसने अपना एकलौता पुत्र दे दिया, ताकि जो कोई उस पर विश्वास करे, वह नाश न हो, परन्तु अनन्त जीवन पाए।',
+      'reference': 'यूहन्ना 3:16',
+    },
+    {
+      'text': 'मैं उस मसीह के द्वारा जो मुझे सामर्थ देता है, सब कुछ कर सकता हूं।',
+      'reference': 'फिलिप्पियों 4:13',
+    },
+    {
+      'text': 'यहोवा मेरा चरवाहा है; मुझे कुछ घटी न होगी।',
+      'reference': 'भजन संहिता 23:1',
+    },
+    {
+      'text': 'स्थिर हो जाओ, और जानो कि मैं ही परमेश्वर हूं।',
+      'reference': 'भजन संहिता 46:10',
+    },
+    {
+      'text':
+          'अपने सम्पूर्ण हृदय से यहोवा पर भरोसा रखना, और अपनी समझ का सहारा न लेना।',
+      'reference': 'नीतिवचन 3:5',
+    },
+  ];
+
   // UPDATED METHOD: Now accepts (int day, String lang)
   static Map<String, String> getVerse(int day, String lang) {
-    final list = (lang == 'ta') ? _versesTa : _versesEn;
+    final list =
+        (lang == 'ta') ? _versesTa : (lang == 'hi') ? _versesHi : _versesEn;
     return list[day % list.length];
   }
 }

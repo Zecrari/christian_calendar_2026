@@ -279,11 +279,145 @@ class RosaryDatabase {
 
   // --- PUBLIC GETTER ---
   static List<MysteryModel> getMysteries(String type, String lang) {
-    if (lang == 'ta') {
-      return _mysteriesTa[type] ?? [];
-    }
+    if (lang == 'ta') return _mysteriesTa[type] ?? [];
+    if (lang == 'hi') return _mysteriesHi[type] ?? [];
     return _mysteriesEn[type] ?? [];
   }
+
+  // ==============================================================================
+  // 3. MYSTERIES (HINDI)
+  // ==============================================================================
+  static final Map<String, List<MysteryModel>> _mysteriesHi = {
+    'Joyful': [
+      const MysteryModel(
+        title: "घोषणा",
+        fruit: "विनम्रता",
+        scripture: "लूका 1:38",
+        description:
+            "देवदूत गब्रियल मरियम को बताते हैं कि वह ईश्वर की माँ बनेंगी।",
+      ),
+      const MysteryModel(
+        title: "भेंट",
+        fruit: "पड़ोसी प्रेम",
+        scripture: "लूका 1:41",
+        description: "मरियम अपनी चचेरी बहन एलिसाबेत से मिलने जाती हैं।",
+      ),
+      const MysteryModel(
+        title: "येसु का जन्म",
+        fruit: "निर्धनता",
+        scripture: "लूका 2:7",
+        description: "येसु का जन्म बेथलहम में एक गौशाला में होता है।",
+      ),
+      const MysteryModel(
+        title: "मंदिर में अर्पण",
+        fruit: "आज्ञाकारिता",
+        scripture: "लूका 2:22",
+        description: "मरियम और यूसुफ येसु को मंदिर में अर्पित करते हैं।",
+      ),
+      const MysteryModel(
+        title: "मंदिर में येसु की खोज",
+        fruit: "आनंद",
+        scripture: "लूका 2:46",
+        description: "येसु मंदिर में बुजुर्गों को शिक्षा देते पाए जाते हैं।",
+      ),
+    ],
+    'Sorrowful': [
+      const MysteryModel(
+        title: "बाग में पीड़ा",
+        fruit: "पाप पर पश्चाताप",
+        scripture: "लूका 22:44",
+        description: "येसु गेधसमनी बाग में मृत्यु से पहले की रात प्रार्थना करते हैं।",
+      ),
+      const MysteryModel(
+        title: "खंभे से बांधकर कोड़े",
+        fruit: "पवित्रता",
+        scripture: "यूहन्ना 19:1",
+        description: "पिलातुस येसु को कोड़े मारने का आदेश देता है।",
+      ),
+      const MysteryModel(
+        title: "कांटों का मुकुट",
+        fruit: "साहस",
+        scripture: "मत्ती 27:29",
+        description: "सैनिक येसु को कांटों का मुकुट पहनाकर उनका उपहास करते हैं।",
+      ),
+      const MysteryModel(
+        title: "क्रूस वहन",
+        fruit: "धैर्य",
+        scripture: "यूहन्ना 19:17",
+        description: "येसु भारी क्रूस उठाकर कलवारी की ओर जाते हैं।",
+      ),
+      const MysteryModel(
+        title: "क्रूस पर मृत्यु",
+        fruit: "मोक्ष",
+        scripture: "लूका 23:46",
+        description: "येसु हमारे पापों के लिए क्रूस पर मरते हैं।",
+      ),
+    ],
+    'Glorious': [
+      const MysteryModel(
+        title: "पुनरुत्थान",
+        fruit: "विश्वास",
+        scripture: "मरकुस 16:6",
+        description: "येसु मृत्यु को जीतकर जी उठते हैं।",
+      ),
+      const MysteryModel(
+        title: "स्वर्गारोहण",
+        fruit: "आशा",
+        scripture: "प्रेरितों 1:9",
+        description: "येसु पिता के पास स्वर्ग में चले जाते हैं।",
+      ),
+      const MysteryModel(
+        title: "पवित्र आत्मा का आगमन",
+        fruit: "प्रज्ञा",
+        scripture: "प्रेरितों 2:4",
+        description: "पवित्र आत्मा प्रेरितों पर उतरता है।",
+      ),
+      const MysteryModel(
+        title: "मरियम का स्वर्गारोहण",
+        fruit: "भक्ति",
+        scripture: "भजन 132:8",
+        description: "मरियम शरीर और आत्मा सहित स्वर्ग में उठाई जाती हैं।",
+      ),
+      const MysteryModel(
+        title: "मरियम का राज्याभिषेक",
+        fruit: "अनन्त आनंद",
+        scripture: "प्रका. 12:1",
+        description: "मरियम को स्वर्ग और पृथ्वी की रानी घोषित किया जाता है।",
+      ),
+    ],
+    'Luminous': [
+      const MysteryModel(
+        title: "बपतिस्मा",
+        fruit: "खुलापन",
+        scripture: "मत्ती 3:17",
+        description: "ईश्वर येसु को अपना प्रिय पुत्र घोषित करते हैं।",
+      ),
+      const MysteryModel(
+        title: "काना का विवाह",
+        fruit: "मरियम के द्वारा येसु तक",
+        scripture: "यूहन्ना 2:5",
+        description: "येसु मरियम के अनुरोध पर पानी को दाखरस में बदलते हैं।",
+      ),
+      const MysteryModel(
+        title: "राज्य की घोषणा",
+        fruit: "पश्चाताप",
+        scripture: "मरकुस 1:15",
+        description: "येसु सुसमाचार का प्रचार करते और मन-फिराव के लिए बुलाते हैं।",
+      ),
+      const MysteryModel(
+        title: "रूपान्तरण",
+        fruit: "पवित्रता",
+        scripture: "मत्ती 17:2",
+        description: "येसु पेत्रुस, याकूब और यूहन्ना को महिमा में प्रकट होते हैं।",
+      ),
+      const MysteryModel(
+        title: "पवित्र भोज की स्थापना",
+        fruit: "आराधना",
+        scripture: "लूका 22:19",
+        description: "येसु अपने शरीर और रक्त को आत्माओं के भोजन के रूप में देते हैं।",
+      ),
+    ],
+  };
 
   // ==============================================================================
   // 3. PRAYERS (ENGLISH)
@@ -326,6 +460,27 @@ class RosaryDatabase {
 
   // --- PUBLIC GETTER ---
   static Map<String, String> getPrayers(String lang) {
-    return (lang == 'ta') ? _prayersTa : _prayersEn;
+    if (lang == 'ta') return _prayersTa;
+    if (lang == 'hi') return _prayersHi;
+    return _prayersEn;
   }
+
+  // ==============================================================================
+  // 5. PRAYERS (HINDI)
+  // ==============================================================================
+  static const Map<String, String> _prayersHi = {
+    'Sign of the Cross': "पिता, पुत्र और पवित्र आत्मा के नाम में। आमीन।",
+    'Apostles\' Creed':
+        "मैं सर्वशक्तिमान पिता ईश्वर पर विश्वास करता हूँ, स्वर्ग और पृथ्वी के सृष्टिकर्ता पर...",
+    'Our Father':
+        "हे हमारे स्वर्गीय पिता, तेरा नाम पवित्र हो; तेरा राज्य आए; तेरी इच्छा जैसी स्वर्ग में पूरी होती है, वैसे पृथ्वी पर भी हो। \n\nहमारी प्रतिदिन की रोटी आज हमें दे; और हमारे अपराधों को क्षमा कर, जैसे हम भी अपने अपराधियों को क्षमा करते हैं; और हमें परीक्षा में न ले, परन्तु बुराई से बचा। आमीन।",
+    'Hail Mary':
+        "हे मरियम, अनुग्रह से परिपूर्ण, प्रभु तेरे साथ है। तू स्त्रियों में धन्य है, और धन्य है तेरे उदर का फल येसु। \n\nहे पवित्र मरियम, ईश्वर की माँ, अभी और हमारी मृत्यु की घड़ी में हम पापियों के लिए प्रार्थना कर। आमीन।",
+    'Glory Be':
+        "पिता को, पुत्र को और पवित्र आत्मा को महिमा हो। \n\nजैसे आदि में थी, अब है और सदा रहेगी, युगों युग। आमीन।",
+    'Fatima Prayer':
+        "हे मेरे येसु, हमारे पापों को क्षमा कर, हमें नरक की आग से बचा, सभी आत्माओं को स्वर्ग ले चल, विशेषकर उन आत्माओं को जिन्हें तेरी दया की सबसे अधिक आवश्यकता है।",
+    'Hail, Holy Queen':
+        "हे पवित्र रानी, दया की माँ, हमारा जीवन, मिठास और आशा...",
+  };
 }

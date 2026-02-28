@@ -34,7 +34,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // Local state for immediate UI feedback
   late String _localLang;
   late ThemeMode _localThemeMode;
-  bool _isProcessing = false;
 
   @override
   void initState() {
@@ -96,29 +95,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _handleLanguageChange(String newLang) {
-    if (_isProcessing || newLang == _localLang) return;
-    setState(() {
-      _isProcessing = true;
-      _localLang = newLang;
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onLanguageChange(newLang);
-      setState(() => _isProcessing = false);
-    });
+    if (newLang == _localLang) return;
+    setState(() => _localLang = newLang);
+    widget.onLanguageChange(newLang);
   }
 
   void _handleThemeToggle() {
-    if (_isProcessing) return;
     setState(() {
-      _isProcessing = true;
-      _localThemeMode = _localThemeMode == ThemeMode.light 
-          ? ThemeMode.dark 
+      _localThemeMode = _localThemeMode == ThemeMode.light
+          ? ThemeMode.dark
           : ThemeMode.light;
     });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onThemeToggle();
-      setState(() => _isProcessing = false);
-    });
+    widget.onThemeToggle();
   }
 
   Future<void> _launchFeedback() async {
@@ -179,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   return RadioListTile<String>(
                     value: l.code,
                     groupValue: _localLang,
-                    onChanged: _isProcessing ? null : (val) => _handleLanguageChange(val!),
+                    onChanged: (val) => _handleLanguageChange(val!),
                     title: Text(l.name, style: const TextStyle(fontWeight: FontWeight.w500)),
                     secondary: Text(l.flag, style: const TextStyle(fontSize: 22)),
                     activeColor: primaryColor,
@@ -200,7 +188,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     subtitle: AppTranslations.get(isDark ? 'dark' : 'light', widget.lang),
                     trailing: Switch(
                       value: isDark,
-                      onChanged: _isProcessing ? null : (_) => _handleThemeToggle(),
+                      onChanged: (_) => _handleThemeToggle(),
                       activeColor: primaryColor,
                     ),
                   ),
@@ -304,12 +292,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
 
-          // LOADING OVERLAY
-          if (_isProcessing)
-            Container(
-              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.6),
-              child: const Center(child: CircularProgressIndicator()),
-            ),
+
         ],
       ),
     );

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -13,12 +12,8 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
-  // ⚠️ IMPORTANT: Use these TEST IDs for development.
-  // Replace with your REAL ID (from your screenshot) ONLY when building for Play Store.
-  final String _adUnitId =
-      Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/6300978111' // Test Android Banner
-          : 'ca-app-pub-3940256099942544/2934735716'; // Test iOS Banner
+  // ✅ PRODUCTION Banner Ad Unit ID
+  final String _adUnitId = 'ca-app-pub-5100408620740144/5238403550';
 
   @override
   void initState() {

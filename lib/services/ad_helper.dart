@@ -1,15 +1,11 @@
-import 'dart:io';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdHelper {
   static InterstitialAd? _interstitialAd;
   static bool _isAdLoaded = false;
 
-  // ⚠️ TEST ID. Create an 'Interstitial' unit in AdMob to get your real ID later.
-  static final String _adUnitId =
-      Platform.isAndroid
-          ? 'ca-app-pub-3940256099942544/1033173712' // Test Android Interstitial
-          : 'ca-app-pub-3940256099942544/4411468910'; // Test iOS Interstitial
+  // ✅ PRODUCTION Interstitial Ad Unit ID
+  static final String _adUnitId = 'ca-app-pub-5100408620740144/6169505565';
 
   /// Loads an ad in the background. Call this when your screen initializes.
   static void loadInterstitialAd() {

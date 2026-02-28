@@ -1,6 +1,7 @@
 class AppConstants {
   static const String ENGLISH = 'en';
   static const String TAMIL = 'ta';
+  static const String HINDI = 'hi';
 
   static const String MAPS_SEARCH_QUERY =
       "https://www.google.com/maps/search/?api=1&query=Christian+Churches+near+me";
@@ -11,6 +12,7 @@ class AppConstants {
   static const List<LanguageOption> languages = [
     LanguageOption('English', 'en', '🇺🇸'),
     LanguageOption('தமிழ்', 'ta', '🇮🇳'),
+    LanguageOption('हिंदी', 'hi', '🇮🇳'),
   ];
 }
 
