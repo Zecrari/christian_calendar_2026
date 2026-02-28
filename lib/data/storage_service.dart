@@ -19,6 +19,10 @@ class StorageService {
   static const String KEY_CURRENT_BOOK = 'current_book';
   static const String KEY_CURRENT_CHAPTER = 'current_chapter';
 
+  // New Feature Keys
+  static const String KEY_BAPTISM_NAME = 'baptism_saint_name';
+  static const String KEY_PRAYER_JOURNAL = 'prayer_journal_entries_v2';
+
   static SharedPreferences? _prefs;
   
   static Future<void> initialize() async {
@@ -52,6 +56,16 @@ class StorageService {
   static List<String> getAchievements() {
     return _instance.getStringList(KEY_ACHIEVEMENTS) ?? [];
   }
+
+  // --- GENERIC HELPERS ---
+  static String? getString(String key) => _instance.getString(key);
+  static Future<void> setString(String key, String value) async =>
+      await _instance.setString(key, value);
+
+  // --- BAPTISM NAME ---
+  static String getBaptismName() => _instance.getString(KEY_BAPTISM_NAME) ?? '';
+  static Future<void> saveBaptismName(String name) async =>
+      await _instance.setString(KEY_BAPTISM_NAME, name);
 
   // --- ASYNC SAVE METHODS ---
   static Future<void> completeOnboarding() async => 

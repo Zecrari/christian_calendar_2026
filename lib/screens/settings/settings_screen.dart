@@ -141,6 +141,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ).whenComplete(() => _stopSound());
   }
 
+  void _showLanguageSelectionSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Theme.of(context).cardColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => _LanguageSelectionSheet(
+        currentLang: _localLang,
+        onSelect: (newLang) {
+          _handleLanguageChange(newLang);
+          Navigator.pop(ctx);
+        },
+      ),
+    );
+  }
+
   // ─── UI BUILDER ────────────────────────────────────────────────────────────
 
   @override
@@ -160,27 +177,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListView(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             children: [
-              // 1. LANGUAGE GROUP
-              _SectionHeader(title: AppTranslations.get('language', widget.lang)),
-              _SettingsCard(
-                children: AppConstants.languages.map((l) {
-                  return RadioListTile<String>(
-                    value: l.code,
-                    groupValue: _localLang,
-                    onChanged: (val) => _handleLanguageChange(val!),
-                    title: Text(l.name, style: const TextStyle(fontWeight: FontWeight.w500)),
-                    secondary: Text(l.flag, style: const TextStyle(fontSize: 22)),
-                    activeColor: primaryColor,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 28),
-
-              // 2. PREFERENCES GROUP (Theme & Notifications combined)
-              _SectionHeader(title: AppTranslations.get('appearance', widget.lang)),
+              // 1. PREFERENCES GROUP
+              _SectionHeader(title: AppTranslations.get('preferences', widget.lang)),
               _SettingsCard(
                 children: [
+                  _SettingsTile(
+                    onTap: _showLanguageSelectionSheet,
+                    leadingIcon: Icons.language_rounded,
+                    iconColor: Colors.blueAccent,
+                    title: AppTranslations.get('language', widget.lang),
+                    subtitle: AppConstants.languages.firstWhere((l) => l.code == _localLang, orElse: () => AppConstants.languages.first).name,
+                    trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey),
+                  ),
                   _SettingsTile(
                     leadingIcon: isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
                     iconColor: isDark ? Colors.amber : Colors.orange,
@@ -213,7 +221,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: 28),
 
-              // 3. EXPLORE / SUPPORT GROUP
+              // 2. SHOPPING GROUP
               _SectionHeader(title: AppTranslations.get('shop', widget.lang)),
               _SettingsCard(
                 children: [
@@ -228,6 +236,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     subtitle: AppTranslations.get('browse_bibles_amazon', widget.lang),
                     trailing: const Icon(Icons.chevron_right_rounded, color: Colors.grey),
                   ),
+                ],
+              ),
+              const SizedBox(height: 28),
+
+              // 3. SUPPORT GROUP
+              _SectionHeader(title: AppTranslations.get('support', widget.lang)),
+              _SettingsCard(
+                children: [
                   _SettingsTile(
                     onTap: _launchFeedback,
                     leadingIcon: Icons.rate_review_rounded,
@@ -236,35 +252,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     subtitle: AppTranslations.get('feedback_subtitle', widget.lang),
                     trailing: const Icon(Icons.open_in_new_rounded, color: Colors.grey, size: 18),
                   ),
+                  _SettingsTile(
+                    onTap: () async {
+                      final uri = Uri.parse('https://www.buymeacoffee.com/rameshkannan.s');
+                      try {
+                        if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+                          throw Exception('Could not launch check connectivity');
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Could not open Buy Me a Coffee link')),
+                          );
+                        }
+                      }
+                    },
+                    leadingIcon: Icons.local_cafe_rounded,
+                    iconColor: const Color(0xFFFF813F),
+                    title: AppTranslations.get('buy_me_coffee', widget.lang),
+                    subtitle: AppTranslations.get('support_developer', widget.lang),
+                    trailing: const Icon(Icons.open_in_new_rounded, color: Colors.grey, size: 18),
+                  ),
                 ],
               ),
               const SizedBox(height: 28),
 
               // 4. ABOUT GROUP
-              _SectionHeader(title: "About"),
+              _SectionHeader(title: AppTranslations.get('about', widget.lang)),
               _SettingsCard(
                 children: [
-                  _SettingsTile(
-                    leadingIcon: Icons.info_outline_rounded,
-                    iconColor: Colors.grey.shade600,
-                    title: "Version",
-                    trailing: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: primaryColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        _appVersion,
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ),
-                  _SettingsTile(
+                   _SettingsTile(
                     onTap: () async {
                       final uri = Uri.parse(
                         'https://website-sw05.onrender.com/products/christian-calendar-2026/privacy-policy',
@@ -285,6 +302,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     iconColor: Colors.teal,
                     title: AppTranslations.get('privacy_policy', widget.lang),
                     trailing: const Icon(Icons.open_in_new_rounded, color: Colors.grey, size: 18),
+                  ),
+                  _SettingsTile(
+                    leadingIcon: Icons.info_outline_rounded,
+                    iconColor: Colors.grey.shade600,
+                    title: AppTranslations.get('version', widget.lang),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: primaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        _appVersion,
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -462,6 +499,52 @@ class _SoundSelectionSheet extends StatelessWidget {
               ),
               title: Text(AppTranslations.get(sound, lang), style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: isSelected ? const Icon(Icons.check_circle_rounded, color: Colors.green) : null,
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+}
+
+class _LanguageSelectionSheet extends StatelessWidget {
+  final String currentLang;
+  final Function(String) onSelect;
+
+  const _LanguageSelectionSheet({
+    required this.currentLang,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            AppTranslations.get('language', currentLang),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          ...AppConstants.languages.map((l) {
+            final isSelected = currentLang == l.code;
+            return ListTile(
+              onTap: () => onSelect(l.code),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              leading: Text(l.flag, style: const TextStyle(fontSize: 24)),
+              title: Text(l.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+              trailing: isSelected ? Icon(Icons.check_circle_rounded, color: Theme.of(context).colorScheme.primary) : null,
             );
           }).toList(),
         ],

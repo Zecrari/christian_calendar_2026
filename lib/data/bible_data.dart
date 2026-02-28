@@ -11,19 +11,29 @@ class BibleData {
     availableBooks = [];
 
     try {
-      String filename =
-          (langCode == 'ta')
-              ? 'assets/bible_tamil.json'
-              : (langCode == 'hi')
-                  ? 'assets/bible_hindi.json'
-                  : 'assets/bible.json';
+      String filename;
+      if (langCode == 'ta') {
+        filename = 'assets/bible_tamil.json';
+      } else if (langCode == 'hi') {
+        filename = 'assets/bible_hindi.json';
+      } else if (langCode == 'ml') {
+        filename = 'assets/bible_malayalam.json';
+      } else {
+        filename = 'assets/bible.json';
+      }
       final String response = await rootBundle.loadString(filename);
       final dynamic decodedData = json.decode(response);
 
-      if (langCode == 'ta' || langCode == 'hi') {
-        // Tamil / Hindi Adapter
-        final List<String> bookNames =
-            (langCode == 'hi') ? hindiBookNames : tamilBookNames;
+      if (langCode == 'ta' || langCode == 'hi' || langCode == 'ml') {
+        // Tamil / Hindi / Malayalam Adapter
+        final List<String> bookNames;
+        if (langCode == 'hi') {
+          bookNames = hindiBookNames;
+        } else if (langCode == 'ml') {
+          bookNames = malayalamBookNames;
+        } else {
+          bookNames = tamilBookNames;
+        }
         if (decodedData is Map && decodedData.containsKey('Book')) {
           List<dynamic> booksList = decodedData['Book'];
           for (int i = 0; i < booksList.length; i++) {
@@ -288,6 +298,75 @@ class BibleData {
     "யூதா",
     "வெளிப்படுத்தின விசேஷம்",
   ];
+
+  static const List<String> malayalamBookNames = [
+    "ഉൽപ്പത്തി",
+    "പുറപ്പാട്",
+    "ലേവ്യ",
+    "സംഖ്യ",
+    "ആവർത്തനം",
+    "യോശുവ",
+    "ന്യായാധിപന്മാർ",
+    "രൂത്ത്",
+    "1 ശമൂവേൽ",
+    "2 ശമൂവേൽ",
+    "1 രാജാക്കൾ",
+    "2 രാജാക്കൾ",
+    "1 ദിനവൃത്താന്തം",
+    "2 ദിനവൃത്താന്തം",
+    "എസ്രാ",
+    "നെഹെമ്യാ",
+    "എസ്ഥേർ",
+    "ഇയ്യോബ്",
+    "സങ്കീർത്തനം",
+    "സദൃശ്യവാക്യങ്ങൾ",
+    "സഭാപ്രസംഗി",
+    "ഉത്തമഗീതം",
+    "യെശയ്യ",
+    "യിരെമ്യ",
+    "വിലാപങ്ങൾ",
+    "യെഹെസ്കേൽ",
+    "ദാനീയേൽ",
+    "ഹോശേയ",
+    "യോവേൽ",
+    "ആമോസ്",
+    "ഓബദ്യ",
+    "യോനാ",
+    "മീഖ",
+    "നഹൂം",
+    "ഹബക്കൂക്",
+    "സെഫന്യ",
+    "ഹഗ്ഗൈ",
+    "സെഖര്യ",
+    "മലാഖി",
+    "മത്തായി",
+    "മർക്കൊസ്",
+    "ലൂക്കൊസ്",
+    "യോഹന്നാൻ",
+    "അപ്പോ. പ്രവൃത്തികൾ",
+    "റോമർ",
+    "1 കൊരിന്ത്യർ",
+    "2 കൊരിന്ത്യർ",
+    "ഗലാത്യർ",
+    "എഫേസ്യർ",
+    "ഫിലിപ്പ്യർ",
+    "കൊലൊസ്സ്യർ",
+    "1 തെസ്സലൊനീക്യർ",
+    "2 തെസ്സലൊനീക്യർ",
+    "1 തിമൊഥെയൊസ്",
+    "2 തിമൊഥെയൊസ്",
+    "തീത്തൊസ്",
+    "ഫിലേമോൻ",
+    "എബ്രായർ",
+    "യാക്കോബ്",
+    "1 പത്രൊസ്",
+    "2 പത്രൊസ്",
+    "1 യോഹന്നാൻ",
+    "2 യോഹന്നാൻ",
+    "3 യോഹന്നാൻ",
+    "യൂദാ",
+    "വെളിപ്പാട്",
+  ];
 }
 
 class DailyVerses {
@@ -297,6 +376,7 @@ class DailyVerses {
       'text': 'For God so loved the world that he gave his one and only Son...',
       'reference': 'John 3:16',
     },
+
     {
       'text': 'I can do all things through Christ who strengthens me.',
       'reference': 'Philippians 4:13',
@@ -365,10 +445,35 @@ class DailyVerses {
     },
   ];
 
+  // Malayalam Verses
+  static const List<Map<String, String>> _versesMl = [
+    {
+      'text': 'ദൈവം ലോകത്തെ അതിശയമായി സ്നേഹിച്ചതിനാൽ, തന്റെ ഏകജാതനായ പുത്രനെ നൽകി; അവനിൽ വിശ്വസിക്കുന്ന ഏവനും നശിക്കാതെ നിത്യജീവൻ ലഭിക്കേണ്ടതിന്നു തന്നേ.',
+      'reference': 'യോഹ 3:16',
+    },
+    {
+      'text': 'എനിക്കു ശക്തി നൽകുന്ന ക്രിസ്തുവിൽകൂടി ഞാൻ സകലവും ചെയ്‍വാൻ കഴിയും.',
+      'reference': 'ഫിലി 4:13',
+    },
+    {
+      'text': 'കർത്താവ് എന്റെ ഇടയൻ; എനിക്കു മുട്ടുണ്ടാകയില്ല.',
+      'reference': 'സങ്കീ 23:1',
+    },
+    {
+      'text': 'അടങ്ങിയിരിപ്പിൻ; ഞാൻ ദൈവം എന്നു അറിഞ്ഞുകൊൾവിൻ.',
+      'reference': 'സങ്കീ 46:10',
+    },
+    {
+      'text': 'നിന്റെ പൂർണ്ണഹൃദയത്തോടും കർത്താവിൽ ആശ്രയിക്ക; സ്വന്ത ബുദ്ധിയിൽ ഊന്നരുത്.',
+      'reference': 'സദൃ 3:5',
+    },
+  ];
+
   // UPDATED METHOD: Now accepts (int day, String lang)
   static Map<String, String> getVerse(int day, String lang) {
-    final list =
-        (lang == 'ta') ? _versesTa : (lang == 'hi') ? _versesHi : _versesEn;
-    return list[day % list.length];
+    if (lang == 'ta') return _versesTa[day % _versesTa.length];
+    if (lang == 'hi') return _versesHi[day % _versesHi.length];
+    if (lang == 'ml') return _versesMl[day % _versesMl.length];
+    return _versesEn[day % _versesEn.length];
   }
 }

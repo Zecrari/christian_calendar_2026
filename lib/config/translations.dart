@@ -1,5 +1,7 @@
 class AppTranslations {
   static Map<String, Map<String, String>> translations = {
+    // App Title
+    'app_title': {'en': 'Christian Calendar 2026', 'ta': 'கிறிஸ்தவ நாட்காட்டி 2026', 'hi': 'ईसाई कैलेंडर 2026'},
     // Navigation
     'nav_home': {'en': 'Home', 'ta': 'முகப்பு', 'hi': 'होम'},
     'nav_calendar': {'en': 'Calendar', 'ta': 'நாட்காட்டி', 'hi': 'कैलेंडर'},
@@ -33,17 +35,12 @@ class AppTranslations {
       'hi': 'आज कोई विशेष कार्यक्रम नहीं',
     },
     'quick_actions': {'en': 'Quick Actions', 'ta': 'விரைவு செயல்கள்', 'hi': 'त्वरित क्रियाएँ'},
+    'more_options': {'en': 'More', 'ta': 'மேலும்', 'hi': 'और'},
     'churches_nearby': {
       'en': 'Churches Nearby',
       'ta': 'அருகிலுள்ள தேவாலயங்கள்',
       'hi': 'पास के चर्च',
     },
-
-// Add to AppTranslations
-'reading_streak': {'en': 'Reading Streak', 'ta': 'வாசிப்பு தொடர்', 'hi': 'पठन-श्रृंखला'},
-'mark_read_today': {'en': 'Mark as Read Today', 'ta': 'இன்று வாசித்ததாக குறி', 'hi': 'आज पढ़ा हुआ चिह्नित करें'},
-'achievement_unlocked': {'en': 'Achievement Unlocked!', 'ta': 'சாதனை திறக்கப்பட்டது!', 'hi': 'उपलब्धि अनलॉक!'},
-'awesome': {'en': 'Awesome!', 'ta': 'அற்புதம்!', 'hi': 'शानदार!'},
 
     // Calendar
     'liturgical_calendar': {
@@ -135,6 +132,10 @@ class AppTranslations {
     'theme': {'en': 'Theme', 'ta': 'தீம்', 'hi': 'थीम'},
     'light': {'en': 'Light', 'ta': 'வெளிச்சம்', 'hi': 'उजला'},
     'dark': {'en': 'Dark', 'ta': 'இருட்டு', 'hi': 'अंधेरा'},
+    'about': {'en': 'About', 'ta': 'பற்றி', 'hi': 'के बारे में'},
+    'version': {'en': 'Version', 'ta': 'பதிப்பு', 'hi': 'संस्करण'},
+    'preferences': {'en': 'Preferences', 'ta': 'விருப்பங்கள்', 'hi': 'प्राथमिकताएं'},
+    'support': {'en': 'Support', 'ta': 'ஆதரவு', 'hi': 'सहायता'},
 
     // Shop / Buy Bible
 // Add these to your translations map
@@ -201,6 +202,8 @@ class AppTranslations {
       'hi': 'हमें सुधारने में मदद करें – एक त्वरित फॉर्म भरें',
     },
     'privacy_policy': {'en': 'Privacy Policy', 'ta': 'தனியுரிமைக் கொள்கை', 'hi': 'गोपनीयता नीति'},
+    'buy_me_coffee': {'en': 'Buy Me a Coffee', 'ta': 'எனக்கு காபி வாங்க', 'hi': 'मेरे लिए एक कॉफी खरीदें'},
+    'support_developer': {'en': 'Support the Developer', 'ta': 'உருவாக்குநரை ஆதரிக்கவும்', 'hi': 'डेवलपर का समर्थन करें'},
 
     // Reading Tracker - New Keys
     'reading_streak': {'en': 'Reading Streak', 'ta': 'வாசிப்பு தொடர்', 'hi': 'पठन-श्रृंखला'},
@@ -228,6 +231,60 @@ class AppTranslations {
     'recent_activity': {'en': 'Recent Activity', 'ta': 'சமீபத்திய செயல்பாடு', 'hi': 'हालिया गतिविधि'},
     'see_all': {'en': 'See All', 'ta': 'அனைத்தும் பார்', 'hi': 'सब देखें'},
     'continue_reading': {'en': 'Continue Reading', 'ta': 'வாசிப்பைத் தொடர்க', 'hi': 'पढ़ना जारी रखें'},
+
+    // ── New Feature Keys ────────────────────────────────────────────────────
+    'prayer_journal': {'en': 'Prayer Journal', 'ta': 'ஜெப நாட்குறிப்பு', 'hi': 'प्रार्थना पत्रिका'},
+    'novena': {'en': 'Daily Novena', 'ta': 'நவநாள் ஜெபம்', 'hi': 'नवरात्र प्रार्थना'},
+    'stations_cross': {'en': 'Stations of the Cross', 'ta': 'சிலுவை வழி', 'hi': 'क्रूस के स्टेशन'},
+    'confession_guide': {'en': 'Confession Guide', 'ta': 'பாவ அறிக்கை வழிகாட்டி', 'hi': 'पापस्वीकार मार्गदर्शिका'},
+    'liturgy_hours': {'en': 'Liturgy of the Hours', 'ta': 'திருவலிமை மணி ஜெபம்', 'hi': 'घंटों की उपासना'},
+    'mark_answered': {'en': 'Mark Answered', 'ta': 'பதிலளிக்கப்பட்டது என குறி', 'hi': 'उत्तरित चिह्नित करें'},
+    'delete_entry': {'en': 'Delete Entry', 'ta': 'குறிப்பை நீக்கு', 'hi': 'प्रविष्टि हटाएं'},
+    'delete_entry_confirm': {'en': 'Are you sure you want to delete this prayer entry?', 'ta': 'இந்த ஜெபக் குறிப்பை நிச்சயமாக நீக்க வேண்டுமா?', 'hi': 'क्या आप वाकई इस प्रार्थना प्रविष्टि को हटाना चाहते हैं?'},
+    'delete': {'en': 'Delete', 'ta': 'நீக்கு', 'hi': 'हटाएं'},
+    'prayer_journal_empty': {'en': 'Your prayer journal is empty', 'ta': 'உங்கள் ஜெப நாட்குறிப்பு காலியாக உள்ளது', 'hi': 'आपकी प्रार्थना पत्रिका खाली है'},
+    'write_first_prayer': {'en': 'Write your first prayer intention', 'ta': 'உங்கள் முதல் ஜெபக் குறிப்பை எழுதுங்கள்', 'hi': 'अपनी पहली प्रार्थना लिखें'},
+    'new_prayer_entry': {'en': 'New Prayer Entry', 'ta': 'புதிய ஜெபக் குறிப்பு', 'hi': 'नई प्रार्थना प्रविष्टि'},
+    'write_prayer_hint': {'en': 'Write your prayer intention here...', 'ta': 'உங்கள் ஜெபக் குறிப்பை இங்கே எழுதுங்கள்...', 'hi': 'अपनी प्रार्थना यहाँ लिखें...'},
+    'prayer_journal_info': {'en': 'Your personal prayer journal. Write prayer requests, record answers to prayer, and express gratitude. All entries are saved on your device.', 'ta': 'உங்கள் தனிப்பட்ட ஜெப நாட்குறிப்பு. ஜெப விண்ணப்பங்களை எழுதவும், பதிலளிக்கப்பட்ட ஜெபங்களை பதிவு செய்யவும், மற்றும் நன்றியை வெளிப்படுத்தவும். எல்லா குறிப்புகளும் உங்கள் சாதனத்தில் சேமிக்கப்படும்.', 'hi': 'आपकी व्यक्तिगत प्रार्थना पत्रिका। प्रार्थना अनुरोध लिखें, प्रार्थना के उत्तर रिकॉर्ड करें, और आभार व्यक्त करें। सभी प्रविष्टियां आपके डिवाइस पर सहेजी जाती हैं।'},
+    'ok': {'en': 'OK', 'ta': 'சரி', 'hi': 'ठीक है'},
+    'total': {'en': 'Total', 'ta': 'மொத்தம்', 'hi': 'कुल'},
+    'requests': {'en': 'Requests', 'ta': 'விண்ணப்பங்கள்', 'hi': 'अनुरोध'},
+    'all': {'en': 'All', 'ta': 'அனைத்தும்', 'hi': 'सभी'},
+    'request': {'en': 'Request', 'ta': 'விண்ணப்பம்', 'hi': 'अनुरोध'},
+    'answered_type': {'en': 'Answered', 'ta': 'பதிலளிக்கப்பட்டது', 'hi': 'उत्तरित'},
+    'gratitude': {'en': 'Gratitude', 'ta': 'நன்றி', 'hi': 'आभार'},
+    'morning_prayer_title': {'en': 'Morning Prayer', 'ta': 'காலை ஜெபம்', 'hi': 'सुबह की प्रार्थना'},
+    'evening_prayer_title': {'en': 'Evening Prayer', 'ta': 'மாலை ஜெபம்', 'hi': 'शाम की प्रार्थना'},
+    'fasting_day': {'en': 'Fasting Day', 'ta': 'உபவாச நாள்', 'hi': 'उपवास का दिन'},
+    'moveable_feasts': {'en': 'Moveable Feasts', 'ta': 'நகரும் திருவிழாக்கள்', 'hi': 'चल पर्व'},
+    'personal_feast': {'en': 'Personal Feast Day', 'ta': 'தனிப்பட்ட திருவிழா நாள்', 'hi': 'व्यक्तिगत पर्व दिन'},
+    'baptism_name': {'en': 'Baptism Name', 'ta': 'திருமுழுக்கு பெயர்', 'hi': 'बपतिस्मा नाम'},
+
+    // Confession Guide
+    'examination_of_conscience': {'en': 'Examination of Conscience', 'ta': 'மனசாட்சி ஆய்வு', 'hi': 'अंतरात्मा की परीक्षा'},
+    'check_each_area': {'en': 'Check each area to reflect upon', 'ta': 'சிந்திக்க ஒவ்வொரு பகுதியையும் சரிபார்க்கவும்', 'hi': 'विचार करने के लिए प्रत्येक क्षेत्र की जाँच करें'},
+    'act_of_contrition': {'en': 'Act of Contrition', 'ta': 'மனஸ்தாப ஜெபம்', 'hi': 'पश्चाताप की प्रार्थना'},
+    'how_to': {'en': 'How-To', 'ta': 'எப்படி செய்வது', 'hi': 'कैसे करें'},
+    'short_act': {'en': 'Short Act of Contrition', 'ta': 'குறுகிய மனஸ்தாப ஜெபம்', 'hi': 'संक्षिप्त पश्चाताप प्रार्थना'},
+    'prayer_before_confession': {'en': 'Prayer Before Confession', 'ta': 'பாவ அறிக்கை முன் ஜெபம்', 'hi': 'पापस्वीकार से पहले प्रार्थना'},
+    'prayer_after_confession': {'en': 'Prayer After Confession', 'ta': 'பாவ அறிக்கை பின் ஜெபம்', 'hi': 'पापस्वीकार के बाद प्रार्थना'},
+    
+    // Stations of the Cross
+    'reflection': {'en': 'Reflection', 'ta': 'சிந்தனை', 'hi': 'प्रतिबिंब'},
+    'prayer': {'en': 'Prayer', 'ta': 'ஜெபம்', 'hi': 'प्रार्थना'},
+    'station': {'en': 'Station', 'ta': 'நிலையம்', 'hi': 'स्टेशन'},
+    'completed_cross': {'en': 'Completed ✝', 'ta': 'நிறைவு ✝', 'hi': 'पूर्ण ✝'},
+    'we_adore_you': {
+        'en': '✝ We adore You, O Christ, and we praise You\nBecause by Your Holy Cross, You have redeemed the world.',
+        'ta': '✝ கிறிஸ்துவே உம்மை ஆராதித்து போற்றுகிறோம்\nஏனெனில் உமது திருச்சிலுவையால் உலகத்தை மீட்டீர்.',
+        'hi': '✝ हे ख्रीस्त, हम तेरी आराधना करते और तुझे धन्य कहते हैं\nक्योंकि तूने अपने पवित्र क्रूस के द्वारा दुनिया को बचाया है।'
+    },
+
+    // Daily Novena
+    'daily_novena': {'en': 'Daily Novena', 'ta': 'தினசரி நவநாள்', 'hi': 'दैनिक नोवेना'},
+    'day': {'en': 'Day', 'ta': 'நாள்', 'hi': 'दिन'},
+    'day_of': {'en': 'Day {0} of {1}', 'ta': '{1}-ல் நாள் {0}', 'hi': '{1} में से दिन {0}'},
   };
 
   // --- HELPER FOR MONTHS ---

@@ -5,13 +5,19 @@ import '../../config/translations.dart';
 import '../../config/constants.dart';
 import '../../widgets/smooth_card.dart';
 import '../../data/bible_data.dart';
-import '../../data/storage_service.dart'; // ADD THIS IMPORT
-import '../../services/reading_tracker_service.dart'; // ADD THIS IMPORT
+import '../../data/storage_service.dart';
+import '../../data/liturgical_calculator.dart';
+import '../../data/saints_feast_data.dart';
+import '../../services/reading_tracker_service.dart';
 import '../bible/bible_reader_screen.dart';
 import '../calendar/calendar_screen.dart';
+import '../calendar/moveable_feasts_screen.dart';
 import '../prayers/prayer_reminders_screen.dart';
 import '../prayers/prayer_journal_screen.dart';
-import '../prayers/rosary_screen.dart';
+import '../prayers/prayer_devotion_hub_screen.dart';
+import '../prayers/novena_screen.dart';
+import '../prayers/stations_of_cross_screen.dart';
+import '../prayers/confession_guide_screen.dart';
 import '../saints/saints_screen.dart';
 import '../tracker/reading_tracker_screen.dart';
 import '../bible/buy_bible_screen.dart';
@@ -40,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Christian Calendar 2026'),
+        title: Text(AppTranslations.get('app_title', lang)),
         centerTitle: true,
       ),
       body: ListView(
@@ -102,6 +108,12 @@ class DashboardScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
+          // Fasting Day Alert
+          _buildFastingAlertCard(),
+
+          // Personal Feast Day Alert
+          _buildFeastDayCard(),
+
           // 2. NEW: Bible Reading Tracker Card (Main Feature)
           _buildReadingTrackerCard(context),
           const SizedBox(height: 24),
@@ -148,12 +160,12 @@ class DashboardScreen extends StatelessWidget {
             AppTranslations.get('quick_actions', lang),
           ),
           GridView.count(
-            crossAxisCount: 2,
+            crossAxisCount: 3,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: 12,
             crossAxisSpacing: 12,
-            childAspectRatio: 1.5,
+            childAspectRatio: 0.85,
             children: [
               _buildQuickAction(
                 context,
@@ -161,13 +173,6 @@ class DashboardScreen extends StatelessWidget {
                 AppTranslations.get('nav_reminders', lang),
                 Colors.orange,
                 destination: PrayerRemindersScreen(lang: lang),
-              ),
-              _buildQuickAction(
-                context,
-                Icons.church_rounded,
-                AppTranslations.get('churches_nearby', lang),
-                Colors.teal,
-                onTap: () => _openNearbyChurches(context),
               ),
               _buildQuickAction(
                 context,
@@ -181,14 +186,28 @@ class DashboardScreen extends StatelessWidget {
                 Icons.volunteer_activism_rounded,
                 AppTranslations.get('nav_rosary', lang),
                 Colors.pink,
-                destination: RosaryPrayersScreen(lang: lang),
+                destination: PrayerDevotionHubScreen(lang: lang),
               ),
               _buildQuickAction(
                 context,
-                Icons.shopping_bag_rounded,
-                'Buy a Bible',
-                const Color(0xFF7B1FA2),
-                destination: BuyBibleScreen(lang: lang),
+                Icons.local_fire_department_rounded,
+                AppTranslations.get('novena', lang),
+                Colors.red,
+                destination: NovenaScreen(lang: lang),
+              ),
+              _buildQuickAction(
+                context,
+                Icons.church_rounded,
+                AppTranslations.get('stations_cross', lang),
+                const Color(0xFF5D4037),
+                destination: StationsOfCrossScreen(lang: lang),
+              ),
+              _buildQuickAction(
+                context,
+                Icons.grid_view_rounded,
+                AppTranslations.get('more_options', lang),
+                Theme.of(context).colorScheme.primary,
+                onTap: () => _showMoreOptionsBottomSheet(context),
               ),
             ],
           ),
@@ -353,6 +372,91 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildFastingAlertCard() {
+    final today = DateTime.now();
+    final isFasting = LiturgicalCalculator.isFastingDay(today);
+    if (!isFasting) return const SizedBox.shrink();
+    final label = LiturgicalCalculator.getFastingLabel(today, lang);
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF673AB7), Color(0xFF512DA8)],
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.deepPurple.withOpacity(0.3),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.no_food_rounded, color: Colors.white, size: 26),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeastDayCard() {
+    final baptismName = StorageService.getBaptismName();
+    if (baptismName.isEmpty) return const SizedBox.shrink();
+    final saint = SaintFeastData.findSaintByName(baptismName);
+    if (saint == null) return const SizedBox.shrink();
+    final isToday = SaintFeastData.isFeastDayToday(saint);
+    if (!isToday) return const SizedBox.shrink();
+    final greeting = saint.greeting;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFFFFA000), Color(0xFFFF6F00)],
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.orange.withOpacity(0.3),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const Text('🎉', style: TextStyle(fontSize: 26)),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              greeting,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildQuickAction(
     BuildContext context,
     IconData icon,
@@ -375,18 +479,23 @@ class DashboardScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: color.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 28, color: color),
+            child: Icon(icon, size: 24, color: color),
           ),
-          const SizedBox(height: 12),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Text(
+              label,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11, height: 1.1),
+            ),
           ),
         ],
       ),
@@ -405,6 +514,97 @@ class DashboardScreen extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
       ),
+    );
+  }
+
+  void _showMoreOptionsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 24),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Text(
+                AppTranslations.get('more_options', lang),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 24),
+              GridView.count(
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                childAspectRatio: 0.85,
+                children: [
+                  _buildQuickAction(
+                    context,
+                    Icons.library_books_rounded,
+                    AppTranslations.get('nav_journal', lang),
+                    Colors.deepPurple,
+                    destination: PrayerJournalScreen(lang: lang),
+                  ),
+                  _buildQuickAction(
+                    context,
+                    Icons.church_rounded,
+                    AppTranslations.get('churches_nearby', lang),
+                    Colors.teal,
+                    onTap: () {
+                      Navigator.pop(context);
+                      _openNearbyChurches(context);
+                    },
+                  ),
+                  _buildQuickAction(
+                    context,
+                    Icons.checklist_rounded,
+                    AppTranslations.get('confession_guide', lang),
+                    Colors.indigo,
+                    destination: ConfessionGuideScreen(lang: lang),
+                  ),
+                  _buildQuickAction(
+                    context,
+                    Icons.calendar_month_rounded,
+                    AppTranslations.get('moveable_feasts', lang),
+                    const Color(0xFFFFA000),
+                    destination: MoveableFeastsScreen(lang: lang),
+                  ),
+                  _buildQuickAction(
+                    context,
+                    Icons.shopping_bag_rounded,
+                    AppTranslations.get('buy_a_bible', lang),
+                    const Color(0xFF7B1FA2),
+                    destination: BuyBibleScreen(lang: lang),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
+        );
+      },
     );
   }
 

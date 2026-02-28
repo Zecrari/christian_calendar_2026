@@ -117,19 +117,35 @@ class ReadingTrackerService {
   }
 
   static List<bool> getLast7DaysActivity() {
-    final lastReadDate = StorageService.getLastReadDate();
-    if (lastReadDate == null) return List.filled(7, false);
+    final lastReadDateStr = StorageService.getLastReadDate();
+    if (lastReadDateStr == null) return List.filled(7, false);
     
+    final currentStreak = StorageService.getCurrentStreak();
+    DateTime? lastReadDate;
+    try {
+      lastReadDate = _dateFormat.parse(lastReadDateStr);
+    } catch (_) {}
+
     final List<bool> activity = [];
     final today = DateTime.now();
+    final normalizedToday = DateTime(today.year, today.month, today.day);
     
     for (int i = 6; i >= 0; i--) {
-      final date = today.subtract(Duration(days: i));
-      final dateString = _dateFormat.format(date);
-      
-      // Check if read on this date (simplified - in real app track daily reads)
-      activity.add(dateString == lastReadDate || 
-        (i == 0 && hasReadToday()));
+      bool isActive = false;
+      if (lastReadDate != null && currentStreak > 0) {
+        final targetDate = normalizedToday.subtract(Duration(days: i));
+        // We know they read up until lastReadDate, for `currentStreak` consecutive days ending on lastReadDate.
+        // Difference in days from targetDate to lastReadDate
+        final diff = lastReadDate.difference(targetDate).inDays;
+        
+        // Target date is active if it's within the streak window BEFORE or ON lastReadDate
+        // (diff >= 0 means targetDate is <= lastReadDate)
+        // (diff < currentStreak means it is part of the current streak)
+        if (diff >= 0 && diff < currentStreak) {
+          isActive = true;
+        }
+      }
+      activity.add(isActive);
     }
     
     return activity;

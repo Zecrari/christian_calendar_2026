@@ -13,6 +13,7 @@ class AppConstants {
     LanguageOption('English', 'en', '🇺🇸'),
     LanguageOption('தமிழ்', 'ta', '🇮🇳'),
     LanguageOption('हिंदी', 'hi', '🇮🇳'),
+    LanguageOption('മലയാളം', 'ml', '🇮🇳'),
   ];
 }
 
