@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+6
+version: 1.0.0+7
 
 environment:
   sdk: ^3.7.2
@@ -85,11 +85,19 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
+  # Assets listed explicitly to minimize APK/AAB size.
+  # notification.mpeg is excluded - it's served from android/app/src/main/res/raw/
+  # and does NOT need to be in the Flutter asset bundle.
   assets:
-    - assets/
-    - assets/sounds/
-  #   - images/a_dot_ham.jpeg
+    - assets/app_logo.png
+    - assets/logo.jpeg
+    - assets/bible.json.gz
+    - assets/bible_hindi.json.gz
+    - assets/bible_malayalam.json.gz
+    - assets/bible_tamil.json.gz
+    - assets/sounds/sound_1.mp3
+    - assets/sounds/sound_2.mp3
+    - assets/sounds/sound_3.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
