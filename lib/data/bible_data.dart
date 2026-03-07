@@ -1,5 +1,6 @@
 // Auto-generated file
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
 
 class BibleData {
@@ -13,15 +14,19 @@ class BibleData {
     try {
       String filename;
       if (langCode == 'ta') {
-        filename = 'assets/bible_tamil.json';
+        filename = 'assets/bible_tamil.json.gz';
       } else if (langCode == 'hi') {
-        filename = 'assets/bible_hindi.json';
+        filename = 'assets/bible_hindi.json.gz';
       } else if (langCode == 'ml') {
-        filename = 'assets/bible_malayalam.json';
+        filename = 'assets/bible_malayalam.json.gz';
       } else {
-        filename = 'assets/bible.json';
+        filename = 'assets/bible.json.gz';
       }
-      final String response = await rootBundle.loadString(filename);
+      // Load compressed bytes and decompress with GZipCodec (built-in dart:io)
+      final ByteData bytes = await rootBundle.load(filename);
+      final List<int> compressed = bytes.buffer.asUint8List();
+      final List<int> decompressed = GZipCodec().decode(compressed);
+      final String response = utf8.decode(decompressed);
       final dynamic decodedData = json.decode(response);
 
       if (langCode == 'ta' || langCode == 'hi' || langCode == 'ml') {

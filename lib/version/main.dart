@@ -44,7 +44,7 @@ class _ChristianCalendarAppState extends State<ChristianCalendarApp> {
     final Color seedColor = const Color(0xFF673AB7);
 
     return MaterialApp(
-      title: 'Christian Calendar 2026',
+      title: 'Catholic Calendar 2026',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -194,7 +194,7 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Christian Calendar 2026'),
+        title: const Text('Catholic Calendar 2026'),
         centerTitle: true,
       ),
       body: ListView(

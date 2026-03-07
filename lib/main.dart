@@ -118,7 +118,7 @@ class _ChristianCalendarAppState extends State<ChristianCalendarApp> {
     }
 
     return MaterialApp(
-      title: 'Christian Calendar 2026',
+      title: 'Catholic Calendar 2026',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

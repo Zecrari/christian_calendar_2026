@@ -1,7 +1,7 @@
 class AppTranslations {
   static Map<String, Map<String, String>> translations = {
     // App Title
-    'app_title': {'en': 'Christian Calendar 2026', 'ta': 'கிறிஸ்தவ நாட்காட்டி 2026', 'hi': 'ईसाई कैलेंडर 2026', 'ml': 'ക്രിസ്ത്യൻ കലണ്ടർ 2026'},
+    'app_title': {'en': 'Catholic Calendar 2026', 'ta': 'கத்தோலிக்க நாட்காட்டி 2026', 'hi': 'कैथोलिक कैलेंडर 2026', 'ml': 'കത്തോലിക്ക കലണ്ടർ 2026'},
     // Navigation
     'nav_home': {'en': 'Home', 'ta': 'முகப்பு', 'hi': 'होम', 'ml': 'ഹോം'},
     'nav_calendar': {'en': 'Calendar', 'ta': 'நாட்காட்டி', 'hi': 'कैलेंडर', 'ml': 'കലണ്ടർ'},

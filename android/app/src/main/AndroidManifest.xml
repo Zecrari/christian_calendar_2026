@@ -19,7 +19,7 @@
     </queries>
     
     <application
-        android:label="Christian Calendar"
+        android:label="Catholic Calendar 2026"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <meta-data

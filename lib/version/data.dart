@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -170,10 +171,12 @@ class BibleData {
 
     try {
       String filename =
-          (langCode == 'ta') ? 'assets/bible_tamil.json' : 'assets/bible.json';
+          (langCode == 'ta') ? 'assets/bible_tamil.json.gz' : 'assets/bible.json.gz';
       print("Loading $filename...");
-
-      final String response = await rootBundle.loadString(filename);
+      final ByteData bytes = await rootBundle.load(filename);
+      final List<int> compressed = bytes.buffer.asUint8List();
+      final List<int> decompressed = GZipCodec().decode(compressed);
+      final String response = utf8.decode(decompressed);
       final dynamic decodedData = json.decode(response);
 
       if (langCode == 'ta') {
