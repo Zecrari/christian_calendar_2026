@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/liturgical_calculator.dart';
 import '../../data/saints_feast_data.dart';
 import '../../data/storage_service.dart';
@@ -37,6 +38,7 @@ class PrayerDevotionHubScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+      bottomNavigationBar: const MyBannerAdWidget(),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 80),
         children: [

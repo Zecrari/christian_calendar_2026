@@ -1,6 +1,7 @@
 // Auto-generated file
 import 'package:flutter/material.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import 'dashboard_screen.dart';
 import '../calendar/calendar_screen.dart';
 import '../bible/bible_reader_screen.dart';
@@ -43,43 +44,54 @@ class _MainNavigationState extends State<MainNavigation> {
 
     return Scaffold(
       body: tabs[_currentIndex],
-      bottomNavigationBar: NavigationBar(
-        height: 70,
-        elevation: 0,
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) => setState(() => _currentIndex = index),
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.church_outlined),
-            selectedIcon: const Icon(
-              Icons.church_rounded,
-              color: Color(0xFF673AB7),
-            ),
-            label: AppTranslations.get('nav_home', widget.currentLanguage),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.calendar_month_outlined),
-            selectedIcon: const Icon(
-              Icons.calendar_month_rounded,
-              color: Color(0xFF673AB7),
-            ),
-            label: AppTranslations.get('nav_calendar', widget.currentLanguage),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.menu_book_outlined),
-            selectedIcon: const Icon(
-              Icons.menu_book_rounded,
-              color: Color(0xFF673AB7),
-            ),
-            label: AppTranslations.get('nav_bible', widget.currentLanguage),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.settings_outlined),
-            selectedIcon: const Icon(
-              Icons.settings_rounded,
-              color: Color(0xFF673AB7),
-            ),
-            label: AppTranslations.get('nav_settings', widget.currentLanguage),
+      // Banner ad + bottom nav together
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // ✅ Banner hidden on Bible tab (index 2) — it has a floating nav bar
+          if (_currentIndex != 2) const MyBannerAdWidget(),
+          NavigationBar(
+            height: 70,
+            elevation: 0,
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (index) =>
+                setState(() => _currentIndex = index),
+            destinations: [
+              NavigationDestination(
+                icon: const Icon(Icons.church_outlined),
+                selectedIcon: const Icon(
+                  Icons.church_rounded,
+                  color: Color(0xFF673AB7),
+                ),
+                label: AppTranslations.get('nav_home', widget.currentLanguage),
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.calendar_month_outlined),
+                selectedIcon: const Icon(
+                  Icons.calendar_month_rounded,
+                  color: Color(0xFF673AB7),
+                ),
+                label:
+                    AppTranslations.get('nav_calendar', widget.currentLanguage),
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.menu_book_outlined),
+                selectedIcon: const Icon(
+                  Icons.menu_book_rounded,
+                  color: Color(0xFF673AB7),
+                ),
+                label: AppTranslations.get('nav_bible', widget.currentLanguage),
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.settings_outlined),
+                selectedIcon: const Icon(
+                  Icons.settings_rounded,
+                  color: Color(0xFF673AB7),
+                ),
+                label:
+                    AppTranslations.get('nav_settings', widget.currentLanguage),
+              ),
+            ],
           ),
         ],
       ),

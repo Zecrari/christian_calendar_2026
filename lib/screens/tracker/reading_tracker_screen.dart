@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/storage_service.dart';
 import '../../services/reading_tracker_service.dart';
 import '../bible/bible_reader_screen.dart';
@@ -112,6 +113,7 @@ class _ReadingTrackerScreenState extends State<ReadingTrackerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
+      bottomNavigationBar: const MyBannerAdWidget(),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(

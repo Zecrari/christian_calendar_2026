@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/models.dart';
 import '../../data/storage_service.dart';
 import '../../data/bible_data.dart';
@@ -388,6 +389,7 @@ class _PrayerRemindersScreenState extends State<PrayerRemindersScreen> {
                   );
                 },
               ),
+      bottomNavigationBar: const MyBannerAdWidget(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _addOrEditReminder(),
         icon: const Icon(Icons.add_alarm_rounded),

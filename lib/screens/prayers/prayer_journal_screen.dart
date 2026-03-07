@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/storage_service.dart';
 
 // ─── Model ────────────────────────────────────────────────────────────────────
@@ -154,6 +155,7 @@ class _PrayerJournalScreenState extends State<PrayerJournalScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: const MyBannerAdWidget(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showAddDialog(),
         icon: const Icon(Icons.edit_rounded),

@@ -194,12 +194,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
           const SliverToBoxAdapter(child: SizedBox(height: 80)),
         ],
       ),
-      bottomNavigationBar: const SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 0),
-          child: MyBannerAdWidget(), // <--- PLACEMENT
-        ),
-      ),
     );
   }
 

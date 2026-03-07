@@ -42,6 +42,19 @@ android {
         versionName = flutter.versionName
     }
 
+    // ✅ Bundle Config: Strips unused language resources in AAB (Play Store)
+    bundle {
+        language {
+            enableSplit = true
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+
     // 2. SIGNING CONFIG
     signingConfigs {
         create("release") {
@@ -66,13 +79,17 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true 
+            isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+        }
+        getByName("debug") {
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }

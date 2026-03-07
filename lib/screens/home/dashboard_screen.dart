@@ -213,12 +213,6 @@ class DashboardScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: MyBannerAdWidget(),
-        ),
-      ),
     );
   }
 

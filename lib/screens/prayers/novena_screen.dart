@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/novena_data.dart';
 
 class NovenaScreen extends StatefulWidget {
@@ -53,6 +54,7 @@ class _NovenaScreenState extends State<NovenaScreen>
     final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
+      bottomNavigationBar: const MyBannerAdWidget(),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(

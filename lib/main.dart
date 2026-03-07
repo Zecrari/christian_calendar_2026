@@ -20,8 +20,19 @@ Future<void> main() async {
 
   final bool seenOnboarding = StorageService.hasSeenOnboarding();
 
-  // Initialize Google Ads
-  await MobileAds.instance.initialize();
+  // Initialize Google Ads with test device support
+  final InitializationStatus status = await MobileAds.instance.initialize();
+  debugPrint('AdMob initialized: ${status.adapterStatuses}');
+
+  // ✅ Set test device IDs so ads load on your device during development.
+  // To find YOUR device's test ID: run the app and check logcat for:
+  // "Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("XXXXXXXX"))"
+  MobileAds.instance.updateRequestConfiguration(
+    RequestConfiguration(
+      testDeviceIds: ['EMULATOR'], // Add your device hash from logcat here
+    ),
+  );
+
   AdHelper.loadInterstitialAd();
 
   // Date & timezone setup

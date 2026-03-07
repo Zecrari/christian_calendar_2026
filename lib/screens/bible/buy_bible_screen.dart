@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 
 class BuyBibleScreen extends StatelessWidget {
   final String lang;
@@ -134,6 +135,7 @@ class BuyBibleScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      bottomNavigationBar: const MyBannerAdWidget(),
       body: CustomScrollView(
         slivers: [
           // ── Hero App Bar ──────────────────────────────────────────────────

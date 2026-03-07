@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../config/translations.dart';
 import '../../config/constants.dart';
 import '../../data/bible_data.dart';
+import '../../widgets/banner_ad_widget.dart';
 
 class BibleReaderScreen extends StatefulWidget {
   final String lang;
@@ -148,6 +149,13 @@ class _BibleReaderScreenState extends State<BibleReaderScreen> {
                   ],
                 ),
                 _buildFloatingNavBar(),
+                // ✅ Banner pinned at very bottom, above floating nav
+                const Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: MyBannerAdWidget(),
+                ),
               ],
             ),
     );
@@ -337,7 +345,7 @@ class _BibleReaderScreenState extends State<BibleReaderScreen> {
 
   Widget _buildFloatingNavBar() {
     return Positioned(
-      bottom: 30,
+      bottom: 58, // raised above banner (50px) + small gap
       left: 20,
       right: 20,
       child: Container(

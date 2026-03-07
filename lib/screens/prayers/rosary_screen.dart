@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/rosary_data.dart';
 import '../../data/models.dart';
 
@@ -58,6 +59,7 @@ class _RosaryPrayersScreenState extends State<RosaryPrayersScreen> {
 
     return Scaffold(
       backgroundColor: bgColor,
+      bottomNavigationBar: const MyBannerAdWidget(),
       body: CustomScrollView(
         slivers: [
           // 1. App Bar

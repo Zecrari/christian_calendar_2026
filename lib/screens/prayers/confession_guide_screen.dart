@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/confession_data.dart';
 
 class ConfessionGuideScreen extends StatefulWidget {
@@ -58,6 +59,7 @@ class _ConfessionGuideScreenState extends State<ConfessionGuideScreen>
           ],
         ),
       ),
+      bottomNavigationBar: const MyBannerAdWidget(),
       body: TabBarView(
         controller: _tabController,
         children: [

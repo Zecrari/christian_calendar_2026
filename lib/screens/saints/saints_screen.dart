@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/translations.dart';
 import '../../data/saints_data.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../widgets/smooth_card.dart';
 
 class SaintsDevotionalsScreen extends StatelessWidget {
@@ -21,6 +22,7 @@ class SaintsDevotionalsScreen extends StatelessWidget {
         title: Text(AppTranslations.get('saints_devotionals', lang)),
         centerTitle: true,
       ),
+      bottomNavigationBar: const MyBannerAdWidget(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

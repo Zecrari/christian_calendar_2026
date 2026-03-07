@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/banner_ad_widget.dart';
 
 class LiturgyOfHoursScreen extends StatefulWidget {
   final String lang;
@@ -135,6 +136,7 @@ class _LiturgyOfHoursScreenState extends State<LiturgyOfHoursScreen>
           ),
         ],
       ),
+      bottomNavigationBar: const MyBannerAdWidget(),
     );
   }
 

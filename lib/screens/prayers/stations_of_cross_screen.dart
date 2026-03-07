@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../config/translations.dart';
+import '../../widgets/banner_ad_widget.dart';
 import '../../data/stations_data.dart';
 
 class StationsOfCrossScreen extends StatefulWidget {
@@ -146,6 +147,7 @@ class _StationsOfCrossScreenState extends State<StationsOfCrossScreen> {
           _buildNavigation(theme),
         ],
       ),
+      bottomNavigationBar: const MyBannerAdWidget(),
     );
   }
 
